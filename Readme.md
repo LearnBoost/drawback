@@ -17,7 +17,7 @@ CommonJS and browser compliance as follows:
         // for example, if leveraging jQuery flot, that means it will be called as:
 
         $.plot(element, { ..., data: data });
-      });
+      };
 
       module.exports.flot = true;
 
