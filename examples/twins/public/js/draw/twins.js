@@ -2,16 +2,14 @@
   var module = module || {};
 
   module.exports = function(data, element){
-    // element is the element that the <canvas> will be injected to.
-    // for example, if leveraging jQuery flot, that means it will be called as:
-
-    //$.plot(element, { ..., data: data });
+    console.debug('twins processing ...');
   };
 
   module.exports.flot = true;
 
-  if (typeof window != 'undefined' && 'Drawback' in window)
-    Drawback.register('twins', module.exports);
+  // executes (client side) or exports the module (server side)
+  if (typeof window != 'undefined' && 'DrawBack' in window)
+    DrawBack.register('twins', module.exports);
 
 
 })();

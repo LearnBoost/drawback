@@ -14,14 +14,15 @@ window.$ = document.id;
     return typeof a === 'string' ? document.getElement(a, nocash) : document.id(a, nocash);
   };
 
-  Drawback = new new Class({
+  // *** DrawBack ***
+  DrawBack = new new Class({
 
     Implements: [Events],
     _stack: [],
-    _stackNames: {},
+    _stack_: {},
 
     start: function(){
-      if (!Browser.Engine.trident) this._processStack();
+
     },
 
     _processStack: function(){
@@ -31,17 +32,30 @@ window.$ = document.id;
     },
 
     register: function(name, fn){
-      this._stackNames[name] = {
-        _ind: this._stack.length,
+      this._stack_[name] = {
+        i: this._stack.length,
         fn: fn
       };
       this._stack.push(fn);
+    },
+
+    draw: function (id, draw_id, url, options) {
+      var draw = this._stack_[draw_id];
+      if(draw) {
+        // add draw properties
+        draw.el = $(id);
+        draw.url = url;
+
+        // process fn
+        draw.fn($);
+      }
     }
 
   });
 
 })();
+  // *** END DrawBack ***
 
 j(function(){
-  Drawback.start();
+  DrawBack.start();
 });
