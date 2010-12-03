@@ -1,0 +1,3 @@
+[submodule "support/node-canvas"]
+	path = support/node-canvas
+	url = git://github.com/LearnBoost/node-canvas.git
