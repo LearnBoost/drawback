@@ -11,11 +11,9 @@ if ('jQuery' in window){
   DrawBack = {
 
     _stack: [],
-
     _stack_: {},
 
     start: function () {
-      console.debug ("this -> ", this);
     },
 
     _processStack: function(){
@@ -25,14 +23,11 @@ if ('jQuery' in window){
     },
 
     register: function(name, fn){
-      console.debug('register');
       this._stack_[name] = {
         i: this._stack.length,
         fn: fn
       };
       this._stack.push(fn);
-
-      console.debug ("this -> ", this);
     },
 
     draw: function (id, draw_id, url, options) {
@@ -41,9 +36,16 @@ if ('jQuery' in window){
         // add draw properties
         draw.el = j(id);
         draw.url = url;
+        draw.options = j.extend({
+          sync: false,
+          donwload: true,
+          forcerServer: false
+        }, options)
 
         // process fn
         draw.fn({}, draw.el);
+
+        console.debug ("draw -> ", draw);
       }
     }
   }

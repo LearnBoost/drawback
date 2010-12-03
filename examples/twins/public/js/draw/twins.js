@@ -2,7 +2,7 @@
   var module = module || {};
 
   module.exports = function(data, element){
-    console.debug (element[0]);
+
   };
 
   module.exports.flot = true;
