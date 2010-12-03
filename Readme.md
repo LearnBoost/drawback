@@ -107,7 +107,7 @@ The last parameter of the `draw` function call is an object of options.
 ### Public API
 
 The node.js module is a simple function call that receives the `module.exports` (ie:
-the `require()`d module) and returns a node-canvas rendered buffer.
+the `require()` module) and returns a node-canvas rendered buffer.
 
     var drawback = require('drawback');
 
