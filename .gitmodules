@@ -1,3 +1,6 @@
 [submodule "support/node-canvas"]
 	path = support/node-canvas
 	url = git://github.com/LearnBoost/node-canvas.git
+[submodule "public/js/support/flot"]
+	path = public/js/support/flot
+	url = git://github.com/RetroFOX/flot.git

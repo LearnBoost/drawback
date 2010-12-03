@@ -34,7 +34,7 @@ for the server side rendering to load the appropriate module for rendering.
 
 ## Drawing (client side)
 
-In order to effectively draw a chart, first it needs to be included in the <head>,
+In order to effectively draw a chart, first it needs to be included in the \<head\>,
 so that it's compiled along with the rest of the public JavaScript:
 
     script(src: '/js/draw/my_example.js')
