@@ -1,3 +1,3 @@
-window.addEvent('domready', function(){
+j(document).ready(function(){
   DrawBack.draw('#chart', 'twins', '/data/url', {});
 })
