@@ -1,7 +1,7 @@
-LearnBoost drawing framework (drawback)
-=======================================
+Drawback
+========
 
-The LearnBoost drawing framework provides a seamless way to render 2D drawings on 
+The Drawback framework provides a seamless way to render 2D drawings on 
 the client side using HTML5 technologies with a server-side backend.
 
 ## Defining the drawings
@@ -24,7 +24,7 @@ CommonJS and browser compliance as follows:
       if (typeof window != 'undefined' && 'Drawback' in window)
         Drawback.register('my_example', module.exports);
 
-    });
+    })();
 
 In this case, the file would be stored in `public/js/draw/my_example.js`.
 Notice that the filename has to match the `register` first parameter.
@@ -42,7 +42,7 @@ so that it's compiled along with the rest of the public JavaScript:
 Then, in the specific section JavaScript, once the DOM is loaded we can draw it
 like this:
 
-    Drawback.register('my_module', function($){
+    jQuery(function($){
       Drawback.draw('#some_element', 'my_example', '/data/url', options);
     });
 
