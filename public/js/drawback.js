@@ -47,7 +47,7 @@ window.$ = document.id;
         draw.url = url;
 
         // process fn
-        draw.fn($);
+        draw.fn({}, draw.el);
       }
     }
 

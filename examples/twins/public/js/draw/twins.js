@@ -2,7 +2,8 @@
   var module = module || {};
 
   module.exports = function(data, element){
-    console.debug('twins processing ...');
+    console.debug ("data -> ", data);
+    console.debug ("element -> ", element);
   };
 
   module.exports.flot = true;
