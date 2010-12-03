@@ -24,7 +24,7 @@ CommonJS and browser compliance as follows:
       if (typeof window != 'undefined' && 'Drawback' in window)
         Drawback.register('my_example', module.exports);
 
-    });
+    })();
 
 In this case, the file would be stored in `public/js/draw/my_example.js`.
 Notice that the filename has to match the `register` first parameter.
