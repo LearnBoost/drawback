@@ -10,6 +10,3 @@
 [submodule "support/jade"]
 	path = support/jade
 	url = git://github.com/visionmedia/jade.git
-[submodule "public/js/support/jquery"]
-	path = public/js/support/jquery
-	url = git://github.com/jquery/jquery.git
