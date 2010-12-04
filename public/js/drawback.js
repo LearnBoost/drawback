@@ -78,16 +78,19 @@
      * make a ajax request to rendering in server side.
      */
     renderFallback: function (url, objDraw) {
-      var self = this;
-      console.debug ("this -> ", this);
-//      $.ajax({
-//        type: "GET",
-//        url: objDraw.url,
-//        success: function(resp) {
-//          objDraw.data = resp;
-//          self.process(objDraw);
-//        }
-//      });
+      console.debug ("url -> ", url);
+      $.ajax({
+        type: "GET",
+        url: url,
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+          console.debug ("XMLHttpRequest -> ", XMLHttpRequest);
+          console.debug ("textStatus -> ", textStatus);
+          console.debug ("errorThrown -> ", errorThrown);
+        },
+        success: function(resp) {
+          console.debug ("resp -> ", resp);
+        }
+      });
     },
 
     process: function (objDraw) {

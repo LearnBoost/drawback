@@ -43,7 +43,13 @@ app.get('/getChartData', function(req, res){
     period: period
   });
 
-});
+})
+
+// rendering server side
+app.get('/draw/linealBallChart', function(req, res){
+  var dataUrl = end = req.query.url
+    ,  forceDownload = req.query.forceDownload
+})
 
 app.listen(3000);
 console.log('Express app started on port 3000');
