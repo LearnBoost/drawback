@@ -22,11 +22,12 @@
     },
 
     draw: function (el_id, draw_id, url, options) {
-      var draw = this._stack_[draw_id]
+      var self = this
+        ,  objDraw = this._stack_[draw_id]
 
-      if(draw) {
+      if(objDraw) {
         // add new properties
-        draw = $.extend({
+        objDraw = $.extend({
           id: draw_id,
           el: $(el_id),
           url: url,
@@ -36,23 +37,23 @@
             donwload: true,
             forceServer: false
           }, options)
-        }, draw);
+        }, objDraw);
 
         // forceServer property
         // if set to true it ignores browser rendering and always does server side rendering.
-        if(draw.options.forceServer) {
+        if(objDraw.options.forceServer) {
 
           // urlBuilder function
           // A function that constructs the url for server fallback.
           // It gets the drawing name and data url as parameters.
           // There's also a third argument called forceDownload, which is set to true for the download link construction.
-          server_url = draw.options.urlBuilder(draw.id, draw.url, false);
+          server_url = objDraw.options.urlBuilder(objDraw.id, objDraw.url, false);
 
-          if(server_url) self.renderFallBack(server_url);
+          if(server_url) self.renderFallback(server_url);
         }
 
         if(url != undefined)
-          this.requestData(draw);
+          this.requestData(objDraw);
       }
     },
 
@@ -70,6 +71,23 @@
           self.process(objDraw);
         }
       });
+    },
+
+    /**
+     * renderFallback method
+     * make a ajax request to rendering in server side.
+     */
+    renderFallback: function (url, objDraw) {
+      var self = this;
+      console.debug ("this -> ", this);
+//      $.ajax({
+//        type: "GET",
+//        url: objDraw.url,
+//        success: function(resp) {
+//          objDraw.data = resp;
+//          self.process(objDraw);
+//        }
+//      });
     },
 
     process: function (objDraw) {
