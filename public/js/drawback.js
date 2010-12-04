@@ -13,12 +13,6 @@
     start: function () {
     },
 
-    _processStack: function(){
-      this._stack.each(function(fn){
-        fn($);
-      }, this);
-    },
-
     register: function(name, fn){
       this._stack_[name] = {
         i: this._stack.length,
@@ -42,7 +36,6 @@
             forcerServer: false
           }, options)
         }, draw);
-
 
         if(url != undefined)
           this.requestData(draw);
