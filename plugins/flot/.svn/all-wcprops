@@ -39,17 +39,11 @@ svn:wc:ra_dav:version-url
 V 48
 /svn/!svn/ver/255/trunk/jquery.flot.crosshair.js
 END
-jquery.colorhelpers.js
+jquery.js
 K 25
 svn:wc:ra_dav:version-url
-V 46
-/svn/!svn/ver/219/trunk/jquery.colorhelpers.js
-END
-jquery.flot.navigate.js
-K 25
-svn:wc:ra_dav:version-url
-V 47
-/svn/!svn/ver/251/trunk/jquery.flot.navigate.js
+V 33
+/svn/!svn/ver/180/trunk/jquery.js
 END
 NEWS.txt
 K 25
@@ -57,11 +51,17 @@ svn:wc:ra_dav:version-url
 V 32
 /svn/!svn/ver/268/trunk/NEWS.txt
 END
-jquery.js
+jquery.flot.navigate.js
 K 25
 svn:wc:ra_dav:version-url
-V 33
-/svn/!svn/ver/180/trunk/jquery.js
+V 47
+/svn/!svn/ver/251/trunk/jquery.flot.navigate.js
+END
+jquery.colorhelpers.js
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/219/trunk/jquery.colorhelpers.js
 END
 jquery.flot.fillbetween.js
 K 25
@@ -69,17 +69,17 @@ svn:wc:ra_dav:version-url
 V 50
 /svn/!svn/ver/229/trunk/jquery.flot.fillbetween.js
 END
-jquery.flot.js
-K 25
-svn:wc:ra_dav:version-url
-V 38
-/svn/!svn/ver/267/trunk/jquery.flot.js
-END
 jquery.flot.resize.js
 K 25
 svn:wc:ra_dav:version-url
 V 45
 /svn/!svn/ver/270/trunk/jquery.flot.resize.js
+END
+jquery.flot.js
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/267/trunk/jquery.flot.js
 END
 PLUGINS.txt
 K 25

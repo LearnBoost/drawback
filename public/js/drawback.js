@@ -3,7 +3,11 @@
   // *** DrawBack ***
   DrawBack = {
 
+    // all functions registered into the _stack array
     _stack: [],
+
+    // all functions registered like object collections.
+    // the function name es the object key
     _stack_: {},
 
     start: function () {
@@ -31,6 +35,7 @@
         draw = $.extend({
           el: $(id),
           url: url,
+          data: {},
           options: $.extend({
             sync: false,
             donwload: true,
@@ -39,20 +44,27 @@
         }, draw);
 
 
-        if(url != undefined) {
-          $.ajax({
-            type: "GET",
-            url: url,
-            success: function(resp) {
-              console.debug ("resp -> ", resp);
-            }
-          });
-        }
-
-        // process fn
-        draw.fn({}, draw.el);
+        if(url != undefined)
+          this.requestData(draw);
       }
+    },
 
+    requestData: function (objDraw) {
+      var self = this;
+      $.ajax({
+        type: "GET",
+        async: false,
+        url: objDraw.url,
+        success: function(resp) {
+          objDraw.data = resp;
+          self.process(objDraw);
+        }
+      });
+    },
+
+    process: function (objDraw) {
+      // execute function
+      objDraw.fn(objDraw.data, objDraw.el);
     }
   }
   // *** END DrawBack ***
