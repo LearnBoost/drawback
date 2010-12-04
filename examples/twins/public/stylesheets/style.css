@@ -2,3 +2,15 @@ body {
   padding: 50px 80px;
   font: 14px "Helvetica Nueue", "Lucida Grande", Arial, sans-serif;
 }
+
+div#chart {
+  width: 600px;
+  height: 200px;
+  margin: 10px;
+}
+
+div#chart-twin {
+  width: 600px;
+  height: 200px;
+  margin: 10px;
+}

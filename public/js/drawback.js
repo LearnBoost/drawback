@@ -53,7 +53,6 @@
       var self = this;
       $.ajax({
         type: "GET",
-        async: false,
         url: objDraw.url,
         success: function(resp) {
           objDraw.data = resp;
