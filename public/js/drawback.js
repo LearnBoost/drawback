@@ -1,11 +1,4 @@
-// *** client FrameWorks integration ***
-if ('jQuery' in window){
-  jQuery.noConflict();
-  window.j = jQuery;
-}
-// ***
-
-(function(){
+(function($){
 
   // *** DrawBack ***
   DrawBack = {
@@ -32,27 +25,38 @@ if ('jQuery' in window){
 
     draw: function (id, draw_id, url, options) {
       var draw = this._stack_[draw_id];
+
       if(draw) {
-        // add draw properties
-        draw.el = j(id);
-        draw.url = url;
-        draw.options = j.extend({
-          sync: false,
-          donwload: true,
-          forcerServer: false
-        }, options)
+        // add new properties
+        draw = $.extend({
+          el: $(id),
+          url: url,
+          options: $.extend({
+            sync: false,
+            donwload: true,
+            forcerServer: false
+          }, options)
+        }, draw);
+
+
+        if(url != undefined) {
+          $.ajax({
+            type: "GET",
+            url: url,
+            success: function(resp) {
+              console.debug ("resp -> ", resp);
+            }
+          });
+        }
 
         // process fn
         draw.fn({}, draw.el);
-
-        console.debug ("draw -> ", draw);
       }
+
     }
   }
-
-})();
   // *** END DrawBack ***
 
-j(function(){
   DrawBack.start();
-});
+
+})(jQuery)
