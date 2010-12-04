@@ -22,7 +22,7 @@ app.get('/', function(req, res){
 });
 
 // response ajax request
-app.get('/getData', function(req, res){
+app.get('/getChartData', function(req, res){
   var points = [
     [ 1264993200000, 52 ],
     [ 1280804400000, 90 ],

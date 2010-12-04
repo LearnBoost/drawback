@@ -21,27 +21,45 @@
       this._stack.push(fn);
     },
 
-    draw: function (id, draw_id, url, options) {
-      var draw = this._stack_[draw_id];
+    draw: function (el_id, draw_id, url, options) {
+      var draw = this._stack_[draw_id]
 
       if(draw) {
         // add new properties
         draw = $.extend({
-          el: $(id),
+          id: draw_id,
+          el: $(el_id),
           url: url,
           data: {},
           options: $.extend({
             sync: false,
             donwload: true,
-            forcerServer: false
+            forceServer: false
           }, options)
         }, draw);
+
+        // forceServer property
+        // if set to true it ignores browser rendering and always does server side rendering.
+        if(draw.options.forceServer) {
+
+          // urlBuilder function
+          // A function that constructs the url for server fallback.
+          // It gets the drawing name and data url as parameters.
+          // There's also a third argument called forceDownload, which is set to true for the download link construction.
+          server_url = draw.options.urlBuilder(draw.id, draw.url, false);
+
+          if(server_url) self.renderFallBack(server_url);
+        }
 
         if(url != undefined)
           this.requestData(draw);
       }
     },
 
+    /**
+     * requestData method
+     * retrieve the data throug ajax request
+     */
     requestData: function (objDraw) {
       var self = this;
       $.ajax({
