@@ -23,6 +23,8 @@ app.get('/', function(req, res){
 
 // response ajax request
 app.get('/getChartData', function(req, res){
+  var serverRender = end = req.query.serverRender
+  
   var points = [
     [ 1264993200000, 52 ],
     [ 1280804400000, 90 ],
@@ -37,18 +39,43 @@ app.get('/getChartData', function(req, res){
     start:1264993200000,
     end:1294455600000
   }
+  ,  data = {
+      points: points,
+      period: period
+    }
 
-  res.send({
-    points: points,
-    period: period
-  });
+  if(!serverRender) {
+    res.send(data);
+  }
+  else {
+    var module = __dirname + '/public/js/draw/chart'
+      ,  height = Number(req.query.height)
+      ,  width = Number(req.query.width)
+
+    data.el = {
+      width: width,
+      height: height
+    }
+
+    drawback.draw(module, data, function(err, buf){
+      if (err) return next(err);
+
+      res.send(buf, {
+          'Content-Type': 'image/png'
+        , 'Content-Length': buf.length
+      });
+    });
+  }
 
 })
 
 // rendering server side
 app.get('/draw/linealBallChart', function(req, res){
-  var dataUrl = end = req.query.url
+  var dataUrl = req.query.url
     ,  forceDownload = req.query.forceDownload
+    ,  dims = req.query.dims || {}
+
+    res.redirect(dataUrl+'?serverRender=true&forceDownload=' + forceDownload + (dims.x ? '&width=' + dims.x : '') + (dims.y ? '&height=' + dims.y : ''));
 })
 
 app.listen(3000);

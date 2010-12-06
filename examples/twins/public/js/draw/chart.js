@@ -1,11 +1,10 @@
 /**
  * linealBallChart
  */
-
 (function(){
   var module = module || {};
 
-  module.exports = function(data, element){
+  exports.chart = function(data, element){
 
     if(!data.points) return null;
 
@@ -93,7 +92,7 @@
     options = $.extend(options, data.opts);
 
 
-    return $.plot($(element), [
+  return $.plot($(element), [
     {
       data: [[data.period.start, data.avg], [data.period.end - ((data.period.end-data.period.start)/11), data.avg]],
       lines: {
@@ -132,13 +131,13 @@
     }],
     options
     );
-  };
+};
 
-  module.exports.flot = true;
+//module.exports.flot = true;
 
 
-  // executes (client side) or exports the module (server side)
-  if (typeof window != 'undefined' && 'DrawBack' in window)
-    DrawBack.register('linealBallChart', module.exports);
+// executes (client side) or exports the module (server side)
+if (typeof window != 'undefined' && 'DrawBack' in window)
+  DrawBack.register('linealBallChart', module.exports);
 
 })();

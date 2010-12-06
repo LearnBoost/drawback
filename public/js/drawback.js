@@ -49,7 +49,7 @@
           // There's also a third argument called forceDownload, which is set to true for the download link construction.
           server_url = objDraw.options.urlBuilder(objDraw.id, objDraw.url, false);
 
-          if(server_url) self.renderFallback(server_url);
+          if(server_url) self.renderFallback(server_url, objDraw);
         }
 
         if(url != undefined)
@@ -78,17 +78,24 @@
      * make a ajax request to rendering in server side.
      */
     renderFallback: function (url, objDraw) {
-      console.debug ("url -> ", url);
+      
       $.ajax({
         type: "GET",
+        dataType: 'html',
+        data: {
+          dims: {
+            x: $(objDraw.el).width(),
+            y: $(objDraw.el).height()
+          }
+        },
         url: url,
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
+        error: function (XMLHttpRequest, textStatus) {
           console.debug ("XMLHttpRequest -> ", XMLHttpRequest);
           console.debug ("textStatus -> ", textStatus);
-          console.debug ("errorThrown -> ", errorThrown);
         },
         success: function(resp) {
-          console.debug ("resp -> ", resp);
+          objDraw.el.empty();
+          $(objDraw.el).attr('html', resp);
         }
       });
     },
