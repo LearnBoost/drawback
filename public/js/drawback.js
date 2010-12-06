@@ -1,3 +1,4 @@
+
 (function($){
 
   // *** DrawBack ***
@@ -51,9 +52,17 @@
 
           if(server_url) self.renderFallback(server_url, objDraw);
         }
-
-        if(url != undefined)
-          this.requestData(objDraw);
+        else if(url != undefined)
+            this.requestData(objDraw);
+          else {
+            this.process(objDraw);
+          }
+      }
+      else {
+        console.error('There is no function associated with `' + draw_id + '` id.\n');
+        console.log ('ensure:');
+        console.warn ('  Exists `' + draw_id + '.js`.');
+        console.warn ('  Exists a registered method named `' + draw_id + '`.');
       }
     },
 
@@ -78,15 +87,16 @@
      * make a ajax request to rendering in server side.
      */
     renderFallback: function (url, objDraw) {
-      
+      var dims = {
+        x: $(objDraw.el).width(),
+        y: $(objDraw.el).height()
+      }
+
       $.ajax({
         type: "GET",
         dataType: 'html',
         data: {
-          dims: {
-            x: $(objDraw.el).width(),
-            y: $(objDraw.el).height()
-          }
+          dims: dims
         },
         url: url,
         error: function (XMLHttpRequest, textStatus) {
@@ -94,8 +104,13 @@
           console.debug ("textStatus -> ", textStatus);
         },
         success: function(resp) {
+          var _url = '/getChartData?serverRender=true&forceDownload=false' + '&width=' + dims.x + '&height=' + dims.y;
+
+          var htmlStr = '<img src="' + _url +'"'
+          htmlStr+= ' />'
+
           objDraw.el.empty();
-          $(objDraw.el).attr('html', resp);
+          $(objDraw.el).html(htmlStr);
         }
       });
     },

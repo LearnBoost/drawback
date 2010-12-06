@@ -76,6 +76,8 @@ app.get('/draw/linealBallChart', function(req, res){
     ,  dims = req.query.dims || {}
 
     res.redirect(dataUrl+'?serverRender=true&forceDownload=' + forceDownload + (dims.x ? '&width=' + dims.x : '') + (dims.y ? '&height=' + dims.y : ''));
+
+    console.log (dataUrl+'?serverRender=true&forceDownload=' + forceDownload + (dims.x ? '&width=' + dims.x : '') + (dims.y ? '&height=' + dims.y : ''));
 })
 
 app.listen(3000);
