@@ -39,7 +39,7 @@ app.get('/getData', function(req, res){
     res.send({
       data: data
     });
-  }, 2000)
+  }, 1000);
 })
 
 // rendering server side
@@ -59,12 +59,14 @@ app.get('/draw/:module_name', function(req, res){
         // requre a module to draw
         ,  module = require(__dirname + '/public/js/draw/' + modname);
 
-       drawback.draw(module, {dims: dims, data: obj.data}, function(err, buf){
-         res.send(buf, {
-             'Content-Type': 'image/png'
-           , 'Content-Length': buf.length
-         });
-       });
+        setTimeout(function() {
+          drawback.draw(module, {dims: dims, data: obj.data}, function(err, buf){
+            res.send(buf, {
+              'Content-Type': 'image/png'
+              , 'Content-Length': buf.length
+            });
+          });
+        }, 1000);
      }
 
   // create client to local-request

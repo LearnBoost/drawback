@@ -77,6 +77,7 @@
       var self = this;
       $.ajax({
         type: "GET",
+        async: true,
         url: objDraw.url,
         beforeSend: function (xml) {
           $(objDraw.el).addClass('loading');
@@ -103,9 +104,16 @@
 
         _url = _addAtt('height', _url);
 
-      htmlStr = '<img src="' + _url +'" />'
+      $(objDraw.el).addClass('loading');
 
-      $(objDraw.el).html(htmlStr);
+      // create obj element image
+      var img = new Image();
+      img.src = _url;
+
+      img.onload = function() {
+        $(objDraw.el).removeClass('loading');
+        $(objDraw.el).append(img);
+      }
     },
 
     process: function (objDraw) {
