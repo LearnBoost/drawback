@@ -64,7 +64,6 @@ app.get('/draw/:module_name', function(req, res){
           drawback.draw(moduleDraw, {dims: dims, data: obj.data}, function(err, buf){
             if(err) return;
             var header = {};
-            console.log (forceDownload);
             
             if(forceDownload) {
               header = {
@@ -77,9 +76,6 @@ app.get('/draw/:module_name', function(req, res){
             }
 
             header['Content-Length'] = buf.length;
-
-            console.log (header);
-
             res.send(buf, header);
           });
         }, 500);
