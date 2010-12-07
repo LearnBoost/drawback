@@ -37,15 +37,17 @@ app.get('/getData', function(req, res){
 })
 
 // rendering server side
-app.get('/draw/rectangle', function(req, res){
-  var w = Number(req.query.width)
-    ,  h = Number(req.query.height)
+app.get('/draw/:module_name', function(req, res){
+  var modname = req.param('module_name')
     , dims = {
-        width: w,
-        height: h
+        width: Number(req.query.width),
+        height: Number(req.query.height)
       }
 
-  drawback.draw(__dirname + '/public/js/draw/rectangle', dims, function(err, buf){
+  // requre a module to draw
+  var module = require(__dirname + '/public/js/draw/' + modname);
+
+  drawback.draw(module, dims, function(err, buf){
     res.send(buf, {
         'Content-Type': 'image/png'
       , 'Content-Length': buf.length

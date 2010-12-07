@@ -6,7 +6,7 @@ $(document).ready(function(){
    */
   DrawBack.draw('#chart', 'linealChart', 'getData');
 
-  DrawBack.draw('#rectangular-twin', 'rectangle', null, {
+  DrawBack.draw('#chart-twin', 'linealChart', 'getData', {
     sync: false,
     forceServer: true,
     urlBuilder: function (name, url, forceDownload) {

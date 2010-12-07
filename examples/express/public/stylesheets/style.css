@@ -3,7 +3,7 @@ body {
   font: 14px "Helvetica Nueue", "Lucida Grande", Arial, sans-serif;
 }
 
-div#rectangular-twin {
+div#chart, div#chart-twin {
   width: 600px;
   height: 300px;
 }
