@@ -104,7 +104,10 @@
 
     process: function (objDraw) {
       // execute function
-      objDraw.fn(objDraw.data, objDraw.el);
+      var canvas = objDraw.fn(objDraw.data, objDraw.el);
+
+      // insert canvas response into element
+      $(objDraw.el).append(canvas);
     }
   }
   // *** END DrawBack ***

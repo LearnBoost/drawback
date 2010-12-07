@@ -66,8 +66,6 @@
 
     ctx.restore();
 
-    $(element).append(canvas);
-
     return canvas;
   };
 
@@ -84,12 +82,6 @@
           return new Canvas;
         }
       }
-    };
-
-    // jQuery
-    $ = jQuery = function(el){
-      if (global == this) return new jQuery(el);
-      else this.append = function(){};
     };
   }
 
