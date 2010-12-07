@@ -6,15 +6,19 @@ require.paths.unshift(__dirname + '/../../support');
 
 /*** Module dependencies. ***/
 var express = require('express')
-  ,  drawback = require(__dirname + '/../../lib/drawback');
+,  drawback = require(__dirname + '/../../lib/drawback')
+,  http = require('http');
 
 // Path to our public directory
 var pub = __dirname + '/public';
 
 var app = express.createServer(
-  express.compiler({src: pub, enable: ['sass']}),
+  express.compiler({
+    src: pub,
+    enable: ['sass']
+    }),
   express.staticProvider(pub)
-);
+  );
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
@@ -38,21 +42,42 @@ app.get('/getData', function(req, res){
 
 // rendering server side
 app.get('/draw/:module_name', function(req, res){
+  // retrieve url parameters
   var modname = req.param('module_name')
-    , dims = {
-        width: Number(req.query.width),
-        height: Number(req.query.height)
-      }
+  ,  url = req.query.url
+  ,  dims = {
+       width: Number(req.query.width),
+       height: Number(req.query.height)
+     }
 
-  // requre a module to draw
-  var module = require(__dirname + '/public/js/draw/' + modname);
+     // finaly create chart
+  ,  createChart = function (rawData) {
+       var obj = JSON.parse(rawData)
 
-  drawback.draw(module, dims, function(err, buf){
-    res.send(buf, {
-        'Content-Type': 'image/png'
-      , 'Content-Length': buf.length
-    });
+        // requre a module to draw
+        ,  module = require(__dirname + '/public/js/draw/' + modname);
+
+       drawback.draw(module, {dims: dims, data: obj.data}, function(err, buf){
+         res.send(buf, {
+             'Content-Type': 'image/png'
+           , 'Content-Length': buf.length
+         });
+       });
+     }
+
+  // create client to local-request
+  var localReq = http.createClient(3000, 'localhost')
+    ,  request = localReq.request('GET', '/' + url, {'host': 'localhost'});
+  request.end();
+
+  // get data
+  request.on('response', function (response) {
+    response.setEncoding('utf8');
+    var body = '';
+    response.on('data', function (chunk) {body+=chunk;});
+    response.on('end', function () { createChart(body)});
   });
+
 })
 
 app.listen(3000);

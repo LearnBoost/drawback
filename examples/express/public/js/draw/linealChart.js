@@ -1,20 +1,29 @@
 /**
  * linealChart
+ * @module
+ * @serverSide boolean serverSide
  */
 
-(function(module){
-
+(function(module, serverSide){
   module.exports = function (data, element) {
     var canvas = document.createElement('canvas')
-      ,  ctx = canvas.getContext('2d');
+    ,  ctx = canvas.getContext('2d');
 
-    canvas.width = 2000;
-    canvas.height = 2000;
+    // set dims ?
+    if(!serverSide) {
+      canvas.width = $(element).width();
+      canvas.height = $(element).height();
+    }
+    else {
+      if(data.dims) {
+        canvas.width = data.dims.width;
+        canvas.height = data.dims.height;
+      }
+    }
 
-    // sclae
-    var scale = { x: 20, y: 2 }
+    // chart x/y scale
+    var scale = {x: 20, y: 2}
       ,  _data = data.data;
-
 
     // Draw lineal Chart
     ctx.save();
@@ -23,7 +32,7 @@
     // draw matrix
     ctx.beginPath();
     ctx.lineWidth = 1
-    ctx.strokeStyle = 'rgba(100, 100, 0, 0.1)';
+    ctx.strokeStyle = 'rgba(100,100,100,0.1)';
 
     for(var l=0; l < _data.length; l++) {
       ctx.moveTo(l*scale.x, 0);
@@ -46,11 +55,13 @@
     }
     ctx.stroke();
 
+    // draw points
     ctx.beginPath();
     ctx.fillStyle = '#603';
-    // draw points
-    for(var k=0; k < _data.length; k++)
+    for(var k=0; k < _data.length; k++) {
+      ctx.moveTo(k*scale.x, _data[j]*scale.k);
       ctx.arc(k*scale.x, _data[k]*scale.y, 3, 0, Math.PI*2)
+    }
     ctx.fill();
 
     ctx.restore();
@@ -65,7 +76,6 @@
   if (typeof window != 'undefined' && 'DrawBack' in window) 
     DrawBack.register('linealChart', module.exports);
   else {
-
     // *** Dummy functons ***    
     // document
     document = {
@@ -81,7 +91,6 @@
       if (global == this) return new jQuery(el);
       else this.append = function(){};
     };
-
   }
 
-})(typeof module != 'undefined' ? module : {});
+})(typeof module != 'undefined' ? module : {}, typeof module != 'undefined' ? true : false);
