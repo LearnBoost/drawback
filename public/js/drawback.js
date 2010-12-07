@@ -87,32 +87,46 @@
      * make a ajax request to rendering in server side.
      */
     renderFallback: function (url, objDraw) {
+
       var dims = {
         x: $(objDraw.el).width(),
         y: $(objDraw.el).height()
       }
+        ,  _url = '/draw/rectangle?forceDownload=false' + '&width=' + dims.x + '&height=' + dims.y
+        ,  htmlStr = '<img src="' + _url +'" />'
+      
+      //objDraw.el.empty();
+      $(objDraw.el).html(htmlStr);
 
-      $.ajax({
-        type: "GET",
-        dataType: 'html',
-        data: {
-          dims: dims
-        },
-        url: url,
-        error: function (XMLHttpRequest, textStatus) {
-          console.debug ("XMLHttpRequest -> ", XMLHttpRequest);
-          console.debug ("textStatus -> ", textStatus);
-        },
-        success: function(resp) {
-          var _url = '/getChartData?serverRender=true&forceDownload=false' + '&width=' + dims.x + '&height=' + dims.y;
-
-          var htmlStr = '<img src="' + _url +'"'
-          htmlStr+= ' />'
-
-          objDraw.el.empty();
-          $(objDraw.el).html(htmlStr);
-        }
-      });
+//
+//      console.debug ("url -> ", url);
+//
+//      var dims = {
+//        x: $(objDraw.el).width(),
+//        y: $(objDraw.el).height()
+//      }
+//
+//      $.ajax({
+//        type: "GET",
+//        dataType: 'html',
+//        data: {
+//          dims: dims
+//        },
+//        url: url,
+//        error: function (XMLHttpRequest, textStatus) {
+//          console.debug ("XMLHttpRequest -> ", XMLHttpRequest);
+//          console.debug ("textStatus -> ", textStatus);
+//        },
+//        success: function(resp) {
+//          var _url = '/getChartData?serverRender=true&forceDownload=false' + '&width=' + dims.x + '&height=' + dims.y;
+//
+//          var htmlStr = '<img src="' + _url +'"'
+//          htmlStr+= ' />'
+//
+//          objDraw.el.empty();
+//          $(objDraw.el).html(htmlStr);
+//        }
+//      });
     },
 
     process: function (objDraw) {

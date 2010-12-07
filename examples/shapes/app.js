@@ -22,10 +22,20 @@ app.get('/', function(req, res){
 });
 
 // rendering server side
-app.get('/draw/linealBallChart', function(req, res){
-  var dataUrl = req.query.url
-    ,  forceDownload = req.query.forceDownload
-    ,  dims = req.query.dims || {}
+app.get('/draw/rectangle', function(req, res){
+  var w = Number(req.query.width)
+    ,  h = Number(req.query.height)
+    , dims = {
+        width: w,
+        height: h
+      }
+
+  drawback.draw(__dirname + '/public/js/draw/rectangle', dims, function(err, buf){
+    res.send(buf, {
+        'Content-Type': 'image/png'
+      , 'Content-Length': buf.length
+    });
+  });
 })
 
 app.listen(3000);
