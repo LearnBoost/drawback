@@ -5,6 +5,7 @@
  */
 
 (function(module, serverSide){
+
   module.exports = function (data, element) {
     var canvas = document.createElement('canvas')
     ,  ctx = canvas.getContext('2d');
@@ -68,6 +69,7 @@
 
     return canvas;
   };
+
 
 
   // executes (client side) or exports the module (server side)
