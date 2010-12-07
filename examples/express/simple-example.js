@@ -6,7 +6,7 @@ require.paths.unshift(__dirname + '/../../support');
 
 /*** Module dependencies. ***/
 var express = require('express')
-  ,  drawback = require(__dirname + '/../../lib/drawback')
+  ,  drawback = require('../../lib/drawback')
   ,  http = require('http');
 
 // Path to our public directory
