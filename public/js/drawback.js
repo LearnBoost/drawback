@@ -112,6 +112,9 @@
 
       // create obj element image
       var img = new Image();
+      $(img).attr('width', $(objDraw.el).width());
+      $(img).attr('height', $(objDraw.el).height());
+
       img.src = _url;
 
       img.onload = function() {
@@ -126,7 +129,7 @@
         var url = objDraw.options.urlBuilder ? objDraw.options.urlBuilder(objDraw.id, objDraw.url, false) : '/draw/' + objDraw.id + '?url=/getData&forceDownload=true'
           ,  src = this._createSrcImg(url, objDraw);
 
-        var elDown = $('<div class="download"><a href="' + src + '">download</a></div>');
+        var elDown = $('<div class="download"><a title="download \'' + objDraw.id + '\'" href="' + src + '">download</a></div>');
         $(objDraw.el).append(elDown);
       }
 

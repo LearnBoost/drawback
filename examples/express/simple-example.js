@@ -57,7 +57,7 @@ app.get('/draw/:module_name', function(req, res){
   ,  createChart = function (rawData) {
        var obj = JSON.parse(rawData)
 
-        // require a module to draw
+        // require the module to draw
         ,  moduleDraw = require(pub + '/js/draw/' + modname);
 
         setTimeout(function() {
