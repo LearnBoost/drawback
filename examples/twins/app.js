@@ -1,3 +1,9 @@
+/**
+ * Ejemplo utilizando Express
+ *
+ */
+
+
 // Expose modules in ./support for demo purposes
 require.paths.unshift(__dirname + '/../../support');
 
@@ -24,7 +30,7 @@ app.get('/', function(req, res){
 // response ajax request
 app.get('/getChartData', function(req, res){
   var serverRender = end = req.query.serverRender
-  
+
   var points = [
     [ 1264993200000, 52 ],
     [ 1280804400000, 90 ],

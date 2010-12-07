@@ -22,6 +22,9 @@
       this._stack.push(fn);
     },
 
+    /**
+    * draw method
+    */
     draw: function (el_id, draw_id, url, options) {
       var self = this
         ,  objDraw = this._stack_[draw_id]

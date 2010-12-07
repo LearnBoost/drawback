@@ -1,6 +1,10 @@
 $(document).ready(function(){
 
-  DrawBack.draw('#rectangular', 'rectangle');
+  /**
+   * Renderizamos un gráfico lineal
+   * Previamente hemos registrado un dibujar con id 'linealChart'
+   */
+  DrawBack.draw('#chart', 'linealChart', 'getData');
 
   DrawBack.draw('#rectangular-twin', 'rectangle', null, {
     sync: false,
