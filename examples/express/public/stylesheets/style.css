@@ -7,3 +7,6 @@ div#chart, div#chart-twin {
   width: 400px;
   height: 250px;
 }
+.loading {
+  background: rgba(200, 200, 200, 0.1) url('bg.png') no-repeat 10px 10px;
+}

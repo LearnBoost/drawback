@@ -30,14 +30,16 @@ app.get('/', function(req, res){
 
 // Respondemos al cliente con los datos (en formato JSON) que serán utilizados para implementar el gráfico
 app.get('/getData', function(req, res){
-  var data = [];
+  setTimeout(function() {
+    var data = [];
 
-  for (i = 0; i < 20; i++)
-    data.push(Math.floor(Math.random()*(99 - 0 + 1) + 0))
+    for (i = 0; i < 20; i++)
+      data.push(Math.floor(Math.random()*(99 - 0 + 1) + 0))
 
-  res.send({
-    data: data
-  });
+    res.send({
+      data: data
+    });
+  }, 2000)
 })
 
 // rendering server side

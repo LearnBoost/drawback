@@ -78,6 +78,12 @@
       $.ajax({
         type: "GET",
         url: objDraw.url,
+        beforeSend: function (xml) {
+          $(objDraw.el).addClass('loading');
+        },
+        complete: function (resp) {
+          $(objDraw.el).removeClass('loading');
+        },
         success: function(resp) {
           objDraw.data = resp;
           self.process(objDraw);
