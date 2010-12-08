@@ -1,0 +1,24 @@
+body {
+  padding: 50px 80px;
+  font: 14px "Helvetica Nueue", "Lucida Grande", Arial, sans-serif;
+}
+
+div#chart, div#chart-twin { width: 400px; height: 250px; margin: 10px; position: relative;}
+.loading {
+  background: rgba(200, 200, 200, 0.1) url('bg.png') no-repeat 10px 10px;
+}
+
+.download {
+  position: absolute;
+  bottom: 20px;
+  right: 10px;
+  font: normal normal normal 12px Helvetica;
+}
+.download a{
+  color: #ccc;
+  text-decoration: none;
+}
+.download a:hover{
+  color: #88c;
+  text-decoration: underline;
+}
