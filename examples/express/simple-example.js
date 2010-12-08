@@ -1,5 +1,4 @@
-// Ejemplo de drawback Utilizando Express
-
+// simple express example
 
 // Expose modules in ./support for demo purposes
 require.paths.unshift(__dirname + '/../../support');
@@ -25,7 +24,7 @@ app.set('view engine', 'jade');
 
 
 app.get('/', function(req, res){
-  res.render('partials/shapes', {});
+  res.render('partials/simple', {});
 });
 
 // Respondemos al cliente con los datos (en formato JSON) que serán utilizados para implementar el gráfico
@@ -46,46 +45,46 @@ app.get('/getData', function(req, res){
 app.get('/draw/:module_name', function(req, res){
   // retrieve url parameters
   var modname = req.param('module_name')
-  ,  url = req.query.url
-  ,  forceDownload = req.query.forceDownload == 'true' ? true : false
-  ,  dims = {
-       width: Number(req.query.width),
-       height: Number(req.query.height)
-     }
+    ,  url = req.query.url
+    ,  forceDownload = req.query.forceDownload == 'true' ? true : false
+    ,  dims = {
+         width: Number(req.query.width),
+         height: Number(req.query.height)
+       }
 
-     // finaly create chart
-  ,  createChart = function (rawData) {
-        // *** Dummy functons ***
-        document = {
-          createElement: function(type){
-            if ('canvas' == type) {
-              return new Canvas;
+       // finaly create chart
+    ,  createChart = function (rawData) {
+          // *** Dummy functons ***
+          document = {
+            createElement: function(type){
+              if ('canvas' == type) {
+                return new Canvas;
+              }
             }
-          }
-        };
+          };
 
-       var obj = JSON.parse(rawData)
+         var obj = JSON.parse(rawData)
 
-        // require the module to draw
-        ,  moduleDraw = require(pub + '/js/draw/' + modname);
+          // require the module to draw
+          ,  moduleDraw = require(pub + '/js/draw/' + modname);
 
-        setTimeout(function() {
-          drawback.draw(moduleDraw, {dims: dims, data: obj.data}, function(err, buf){
-            if(err) return;
-            var header = {};
-            
-            if(forceDownload) {
-              res.attachment(modname);
-            }
-            else header = {
-              'Content-Type': 'image/png'
-            }
+          setTimeout(function() {
+            drawback.draw(moduleDraw, {dims: dims, data: obj.data}, function(err, buf){
+              if(err) return;
+              var header = {};
 
-            header['Content-Length'] = buf.length;
-            res.send(buf, header);
-          });
-        }, 500);
-     }
+              if(forceDownload) {
+                res.attachment(modname);
+              }
+              else header = {
+                'Content-Type': 'image/png'
+              }
+
+              header['Content-Length'] = buf.length;
+              res.send(buf, header);
+            });
+          }, 500);
+       }
 
   // create client to local-request
   var localReq = http.createClient(3000, 'localhost')

@@ -1,10 +1,9 @@
 /**
  * linealChart
  * @module
- * @serverSide boolean serverSide
  */
 
-(function(module, serverSide){
+(function(module){
 
   module.exports = function (data, element) {
     var canvas = document.createElement('canvas')
@@ -15,8 +14,11 @@
     canvas.height = data.dims ? data.dims.height : 200;
 
     // chart x/y scale
-    var scale = {x: 20, y: 2}
-      ,  _data = data.data;
+    var scale = {
+      x: 20,
+      y: 2
+    }
+    ,  _data = data.data;
 
     // Draw lineal Chart
     ctx.save();
@@ -68,4 +70,4 @@
   if (typeof window != 'undefined' && 'DrawBack' in window) 
     DrawBack.register('linealChart', module.exports);
 
-})(typeof module != 'undefined' ? module : {}, typeof module != 'undefined' ? true : false);
+})(typeof module != 'undefined' ? module : {});

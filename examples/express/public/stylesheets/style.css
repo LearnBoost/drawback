@@ -3,11 +3,14 @@ body {
   font: 14px "Helvetica Nueue", "Lucida Grande", Arial, sans-serif;
 }
 
+h4 {
+  margin: 5px 0;
+  color: #88a;
+}
+
 div#chart, div#chart-twin {
   width: 400px;
   height: 250px;
-  margin: 10px;
-  margin: 10px;
   position: relative;
 }
 .loading {
@@ -27,4 +30,10 @@ div#chart, div#chart-twin {
 .download a:hover{
   color: #88c;
   text-decoration: underline;
+}
+
+div#flot-chart, div#flot-chart-twin {
+  width: 600px;
+  height: 300px;
+  position: relative;
 }

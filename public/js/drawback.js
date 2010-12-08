@@ -52,7 +52,7 @@
           },
           options: $.extend({
             sync: false,
-            donwload: true,
+            download: true,
             forceServer: false
           }, options)
         }, objDraw);
@@ -93,10 +93,10 @@
         type: "GET",
         async: true,
         url: objDraw.url,
-        beforeSend: function (xml) {
+        beforeSend: function () {
           $(objDraw.el).addClass('loading');
         },
-        complete: function (resp) {
+        complete: function () {
           $(objDraw.el).removeClass('loading');
         },
         success: function(resp) {
@@ -143,6 +143,7 @@
         dims: objDraw.dims,
         data: objDraw.data.data
       }
+
       var canvas = objDraw.fn(data, objDraw.el);
 
       // insert canvas response into element
