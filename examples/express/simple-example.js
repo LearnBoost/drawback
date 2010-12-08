@@ -55,6 +55,15 @@ app.get('/draw/:module_name', function(req, res){
 
      // finaly create chart
   ,  createChart = function (rawData) {
+        // *** Dummy functons ***
+        document = {
+          createElement: function(type){
+            if ('canvas' == type) {
+              return new Canvas;
+            }
+          }
+        };
+
        var obj = JSON.parse(rawData)
 
         // require the module to draw

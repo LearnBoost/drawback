@@ -39,12 +39,17 @@
         ,  objDraw = this._stack_[draw_id]
 
       if(objDraw) {
+        var el = $(el_id);
         // add new properties
         objDraw = $.extend({
           id: draw_id,
-          el: $(el_id),
+          el: el,
           url: url,
           data: {},
+          dims: {
+            width: el.width(),
+            height: el.height()
+          },
           options: $.extend({
             sync: false,
             donwload: true,
@@ -112,8 +117,8 @@
 
       // create obj element image
       var img = new Image();
-      $(img).attr('width', $(objDraw.el).width());
-      $(img).attr('height', $(objDraw.el).height());
+      $(img).attr('width', objDraw.dims.width);
+      $(img).attr('height', objDraw.dims.height);
 
       img.src = _url;
 
@@ -134,7 +139,11 @@
       }
 
       // execute function
-      var canvas = objDraw.fn(objDraw.data, objDraw.el);
+      var data = {
+        dims: objDraw.dims,
+        data: objDraw.data.data
+      }
+      var canvas = objDraw.fn(data, objDraw.el);
 
       // insert canvas response into element
       $(objDraw.el).append(canvas);

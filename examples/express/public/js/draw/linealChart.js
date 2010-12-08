@@ -10,17 +10,9 @@
     var canvas = document.createElement('canvas')
     ,  ctx = canvas.getContext('2d');
 
-    // set dims ?
-    if(!serverSide) {
-      canvas.width = $(element).width();
-      canvas.height = $(element).height();
-    }
-    else {
-      if(data.dims) {
-        canvas.width = data.dims.width;
-        canvas.height = data.dims.height;
-      }
-    }
+    // dims to chart
+    canvas.width = data.dims ? data.dims.width : 200;
+    canvas.height = data.dims ? data.dims.height : 200;
 
     // chart x/y scale
     var scale = {x: 20, y: 2}
@@ -75,16 +67,5 @@
   // executes (client side) or exports the module (server side)
   if (typeof window != 'undefined' && 'DrawBack' in window) 
     DrawBack.register('linealChart', module.exports);
-  else {
-    // *** Dummy functons ***    
-    // document
-    document = {
-      createElement: function(type){
-        if ('canvas' == type) {
-          return new Canvas;
-        }
-      }
-    };
-  }
 
 })(typeof module != 'undefined' ? module : {}, typeof module != 'undefined' ? true : false);
