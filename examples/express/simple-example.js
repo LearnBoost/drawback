@@ -6,7 +6,7 @@ require.paths.unshift(__dirname + '/../../support');
 
 /*** Module dependencies. ***/
 var express = require('express')
-  ,  drawback = require(__dirname + '/../../lib/drawback')
+  ,  drawback = require('../../lib/drawback')
   ,  http = require('http');
 
 // Path to our public directory
@@ -75,10 +75,7 @@ app.get('/draw/:module_name', function(req, res){
             var header = {};
             
             if(forceDownload) {
-              header = {
-                'Content-Type': 'application/force-download name="' + modname + '.png"',
-                'Content-Disposition': 'inline; filename="' + modname + '.png"'
-              }
+              res.attachment(modname);
             }
             else header = {
               'Content-Type': 'image/png'
