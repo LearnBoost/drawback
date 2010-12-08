@@ -35,6 +35,13 @@
       },
 
       grid: {
+        canvasText: {
+          show: true,
+          font: "sans 8px",
+          series: null,
+          seriesFont: "sans 8px",
+          lineBreaks: {show: false, marginTop: 3, marginBottom: 5, lineSpacing: 1}
+        },
         show: true,
         borderWidth: 0,
         borderColor: '#474747',
