@@ -6,7 +6,6 @@ require.paths.unshift(__dirname + '/../../support');
 /*** Module dependencies. ***/
 var express = require('express')
   ,  drawback = require('../../lib/drawback')
-  ,  http = require('http');
 
 // Path to our public directory
 var pub = __dirname + '/public';
@@ -52,52 +51,39 @@ app.get('/draw/:module_name', function(req, res){
          height: Number(req.query.height)
        }
 
-       // finaly create chart
-    ,  createChart = function (rawData) {
-          // *** Dummy functons ***
-          document = {
-            createElement: function(type){
-              if ('canvas' == type) {
-                return new Canvas;
-              }
-            }
-          };
+  // load data, in thi case using auto-request
+  drawback.loadData(3000, 'localhost', url, function(rawData){
+    // *** Dummy functons ***
+    document = {
+      createElement: function(type){
+        if ('canvas' == type) {
+          return new Canvas;
+        }
+      }
+    };
 
-         var obj = JSON.parse(rawData)
+   var obj = JSON.parse(rawData)
 
-          // require the module to draw
-          ,  moduleDraw = require(pub + '/js/draw/' + modname);
+    // require the module to draw
+    ,  moduleDraw = require(pub + '/js/draw/' + modname);
 
-          setTimeout(function() {
-            drawback.draw(moduleDraw, {dims: dims, data: obj.data}, function(err, buf){
-              if(err) return;
-              var header = {};
+    setTimeout(function() {
+      drawback.draw(moduleDraw, {dims: dims, data: obj.data}, function(err, buf){
+        if(err) return;
+        var header = {};
 
-              if(forceDownload) {
-                res.attachment(modname);
-              }
-              else header = {
-                'Content-Type': 'image/png'
-              }
+        if(forceDownload) {
+          res.attachment(modname);
+        }
+        else header = {
+          'Content-Type': 'image/png'
+        }
 
-              header['Content-Length'] = buf.length;
-              res.send(buf, header);
-            });
-          }, 500);
-       }
-
-  // create client to local-request
-  var localReq = http.createClient(3000, 'localhost')
-    ,  request = localReq.request('GET', url, {'host': 'localhost'});
-  request.end();
-
-  // get data
-  request.on('response', function (response) {
-    response.setEncoding('utf8');
-    var body = '';
-    response.on('data', function (chunk) {body+=chunk;});
-    response.on('end', function () {createChart(body)});
-  });
+        header['Content-Length'] = buf.length;
+        res.send(buf, header);
+      });
+    }, 500);
+  })
 
 })
 

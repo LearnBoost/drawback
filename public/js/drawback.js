@@ -129,14 +129,7 @@
     },
 
     process: function (objDraw) {
-      // whether to include a download button along with the . If set to true, it injects an element like this before the target element.
-      if(objDraw.options.download) {
-        var url = objDraw.options.urlBuilder ? objDraw.options.urlBuilder(objDraw.id, objDraw.url, false) : '/draw/' + objDraw.id + '?url=/getData&forceDownload=true'
-          ,  src = this._createSrcImg(url, objDraw);
-
-        var elDown = $('<div class="download"><a title="download \'' + objDraw.id + '\'" href="' + src + '">download</a></div>');
-        $(objDraw.el).append(elDown);
-      }
+      console.debug ("objDraw.options.download -> ", objDraw.options.download);
 
       // execute function
       var data = {
@@ -148,6 +141,15 @@
 
       // insert canvas response into element
       $(objDraw.el).append(canvas);
+
+      // whether to include a download button along with the . If set to true, it injects an element like this before the target element.
+      if(objDraw.options.download) {
+        var url = objDraw.options.urlBuilder ? objDraw.options.urlBuilder(objDraw.id, objDraw.url, false) : '/draw/' + objDraw.id + '?url=/getData&forceDownload=true'
+          ,  src = this._createSrcImg(url, objDraw);
+
+        var elDown = $('<div class="download"><a title="download \'' + objDraw.id + '\'" href="' + src + '">download</a></div>');
+        objDraw.el.append(elDown);
+      }
     }
   }
   // *** END DrawBack ***

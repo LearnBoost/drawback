@@ -7,7 +7,7 @@ $(document).ready(function(){
     });
 
     DrawBack.draw('#chart-twin', 'linealChart', 'getData', {
-      sync: false,
+      sync: true,
       forceServer: true,
       urlBuilder: function (name, url, forceDownload) {
         return 'draw/' + name + '?url=/' + url + '&forceDownload=' + (forceDownload ? forceDownload : false);
@@ -17,17 +17,20 @@ $(document).ready(function(){
 
   // FLOT exmaple
   if($('#flot-example').length) {
-    DrawBack.draw('#flot-chart', 'linealBallsChart', 'getChartData', {
-      download: true
-    });
-//
-//    DrawBack.draw('#chart-twin', 'linealBallsChart', 'getChartData', {
-//      sync: false,
-//      forceServer: true,
+//    DrawBack.draw('#flot-chart', 'linealBallsChart', 'getChartData', {
+//      download: true,
 //      urlBuilder: function (name, url, forceDownload) {
 //        return 'draw/' + name + '?url=/' + url + '&forceDownload=' + (forceDownload ? forceDownload : false);
 //      }
 //    });
+
+    DrawBack.draw('#flot-chart-twin', 'linealBallsChart', 'getChartData', {
+      sync: true,
+      forceServer: true,
+      urlBuilder: function (name, url, forceDownload) {
+        return 'draw/' + name + '?url=/' + url + '&forceDownload=' + (forceDownload ? forceDownload : false);
+      }
+    });
   }
 
 })

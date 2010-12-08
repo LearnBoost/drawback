@@ -52,14 +52,22 @@ app.get('/getChartData', function(req, res){
 })
 
 // rendering server side
-app.get('/draw/linealBallChart', function(req, res){
-  var dataUrl = req.query.url
-    ,  forceDownload = req.query.forceDownload
-    ,  dims = req.query.dims || {}
+app.get('/draw/:module_name', function(req, res){
+  // retrieve url parameters
+  var modname = req.param('module_name')
+    ,  url = req.query.url
+    ,  forceDownload = req.query.forceDownload == 'true' ? true : false
+    ,  dims = {
+         width: Number(req.query.width),
+         height: Number(req.query.height)
+       }
 
-    res.redirect(dataUrl+'?serverRender=true&forceDownload=' + forceDownload + (dims.x ? '&width=' + dims.x : '') + (dims.y ? '&height=' + dims.y : ''));
 
-    console.log (dataUrl+'?serverRender=true&forceDownload=' + forceDownload + (dims.x ? '&width=' + dims.x : '') + (dims.y ? '&height=' + dims.y : ''));
+//  var dataUrl = req.query.url
+//    ,  forceDownload = req.query.forceDownload
+//    ,  dims = req.query.dims || {}
+//
+//    res.redirect(dataUrl+'?serverRender=true&forceDownload=' + forceDownload + (dims.x ? '&width=' + dims.x : '') + (dims.y ? '&height=' + dims.y : ''));
 })
 
 app.listen(3000);
