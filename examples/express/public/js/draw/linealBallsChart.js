@@ -11,6 +11,7 @@
     if(!_data.points) return null;
 
     var options = {
+      // add coolAxes flot plugin
       coolAxes: {
         show: true,
         type: 'tobiReloaded',

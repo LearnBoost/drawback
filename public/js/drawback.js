@@ -22,13 +22,13 @@
       this._stack.push(fn);
     },
 
-    _addAtt:function (att, str, objDraw) {
-      return str + (str.search('&'+att)< 0 ? '&'+att + '='+ $(objDraw.el)[att]() : '')
-    },
-
     _modUrl: function (url, objDraw) {
-        var _url = this._addAtt('width', url, objDraw);
-        _url = this._addAtt('height', _url, objDraw);
+      var _addAtt = function (att, str, objDraw) {
+        return str + (str.search('&'+att)< 0 ? '&'+att + '='+ $(objDraw.el)[att]() : '')
+      }
+        ,  _url = _addAtt('width', url, objDraw);
+
+      _url = _addAtt('height', _url, objDraw);
       return _url;
     },
 
@@ -146,11 +146,9 @@
         var url = objDraw.options.urlBuilder ? objDraw.options.urlBuilder(objDraw.id, objDraw.url, false) : '/draw/' + objDraw.id + '?url=/getData&forceDownload=true'
           ,  src = this._modUrl(url, objDraw);
 
-        url = this._modUrl(url, objDraw);
+        if(src.search(/forceDownload=/) < 0) src+= '&forceDownload=true';
 
-        if(url.search(/\/forceDownload=/) < 0) url+= '&forceDownload=true';
-
-        var elDown = $('<div class="download"><a title="download \'' + objDraw.id + '\'" href="' + url + '">download</a></div>');
+        var elDown = $('<div class="download"><a title="download \'' + objDraw.id + '\'" href="' + src + '">download</a></div>');
         objDraw.el.append(elDown);
       }
     }
