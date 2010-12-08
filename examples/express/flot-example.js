@@ -62,12 +62,28 @@ app.get('/draw/:module_name', function(req, res){
          height: Number(req.query.height)
        }
 
+    // load data, in thi case using auto-request
+  drawback.loadData(3000, 'localhost', url, function(rawData){
+    var data = JSON.parse(rawData)
 
-//  var dataUrl = req.query.url
-//    ,  forceDownload = req.query.forceDownload
-//    ,  dims = req.query.dims || {}
-//
-//    res.redirect(dataUrl+'?serverRender=true&forceDownload=' + forceDownload + (dims.x ? '&width=' + dims.x : '') + (dims.y ? '&height=' + dims.y : ''));
+    // require the module to draw
+    ,  moduleDraw = require(pub + '/js/draw/' + modname);
+
+    // draw
+    drawback.draw(moduleDraw, {dims: dims, data: data.data}, function(err, buf){
+      if(err) return;
+      var header = {};
+
+      if(forceDownload) res.attachment(modname);
+      else header = { 'Content-Type': 'image/png' }
+
+      header['Content-Length'] = buf.length;
+      res.send(buf, header);
+    });
+
+    console.log (data);
+  })
+
 })
 
 app.listen(3000);

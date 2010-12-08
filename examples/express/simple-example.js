@@ -62,22 +62,18 @@ app.get('/draw/:module_name', function(req, res){
       }
     };
 
-   var obj = JSON.parse(rawData)
+   var data = JSON.parse(rawData)
 
     // require the module to draw
     ,  moduleDraw = require(pub + '/js/draw/' + modname);
 
     setTimeout(function() {
-      drawback.draw(moduleDraw, {dims: dims, data: obj.data}, function(err, buf){
+      drawback.draw(moduleDraw, {dims: dims, data: data.data}, function(err, buf){
         if(err) return;
         var header = {};
 
-        if(forceDownload) {
-          res.attachment(modname);
-        }
-        else header = {
-          'Content-Type': 'image/png'
-        }
+        if(forceDownload) res.attachment(modname);
+        else header = { 'Content-Type': 'image/png' }
 
         header['Content-Length'] = buf.length;
         res.send(buf, header);

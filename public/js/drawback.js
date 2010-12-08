@@ -129,8 +129,6 @@
     },
 
     process: function (objDraw) {
-      console.debug ("objDraw.options.download -> ", objDraw.options.download);
-
       // execute function
       var data = {
         dims: objDraw.dims,
