@@ -94,7 +94,7 @@
     options = $.extend(options, _data.opts);
 
 
-  return $.plot($(element), [
+  var plot = $.plot($(element), [
     {
       data: [[_data.period.start, _data.avg], [_data.period.end - ((_data.period.end-_data.period.start)/11), _data.avg]],
       lines: {
@@ -133,6 +133,8 @@
     }],
     options
     );
+
+    return plot.getCanvas();
 };
 
 module.exports.flot = true;

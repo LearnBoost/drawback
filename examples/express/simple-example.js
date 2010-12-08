@@ -54,6 +54,17 @@ app.get('/draw/:module_name', function(req, res){
   // load data, in thi case using auto-request
   drawback.loadData(3000, 'localhost', url, function(rawData){
     // *** Dummy functons ***
+    // node-canvas
+    try {
+      var Canvas = require('../../support/node-canvas/');
+    } catch (err) {
+      try {
+        var Canvas = require('canvas');
+      } catch (err) {
+        throw err;
+      }
+}
+
     document = {
       createElement: function(type){
         if ('canvas' == type) {
@@ -73,7 +84,7 @@ app.get('/draw/:module_name', function(req, res){
         var header = {};
 
         if(forceDownload) res.attachment(modname);
-        else header = { 'Content-Type': 'image/png' }
+        else header = {'Content-Type': 'image/png'}
 
         header['Content-Length'] = buf.length;
         res.send(buf, header);

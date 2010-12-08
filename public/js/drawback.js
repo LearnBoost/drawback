@@ -22,12 +22,13 @@
       this._stack.push(fn);
     },
 
-    _createSrcImg: function (url, objDraw) {
-      var _addAtt = function (att, str) {return str + (str.search('&'+att)< 0 ? '&'+att + '='+ $(objDraw.el)[att]() : '')}
-        ,  _url = _addAtt('width', url);
+    _addAtt:function (att, str, objDraw) {
+      return str + (str.search('&'+att)< 0 ? '&'+att + '='+ $(objDraw.el)[att]() : '')
+    },
 
-        _url = _addAtt('height', _url);
-
+    _modUrl: function (url, objDraw) {
+        var _url = this._addAtt('width', url, objDraw);
+        _url = this._addAtt('height', _url, objDraw);
       return _url;
     },
 
@@ -113,7 +114,7 @@
     renderFallback: function (url, objDraw) {
       $(objDraw.el).addClass('loading');
 
-      var _url = this._createSrcImg(url, objDraw);
+      var _url = this._modUrl(url, objDraw);
 
       // create obj element image
       var img = new Image();
@@ -143,9 +144,13 @@
       // whether to include a download button along with the . If set to true, it injects an element like this before the target element.
       if(objDraw.options.download) {
         var url = objDraw.options.urlBuilder ? objDraw.options.urlBuilder(objDraw.id, objDraw.url, false) : '/draw/' + objDraw.id + '?url=/getData&forceDownload=true'
-          ,  src = this._createSrcImg(url, objDraw);
+          ,  src = this._modUrl(url, objDraw);
 
-        var elDown = $('<div class="download"><a title="download \'' + objDraw.id + '\'" href="' + src + '">download</a></div>');
+        url = this._modUrl(url, objDraw);
+
+        if(url.search(/\/forceDownload=/) < 0) url+= '&forceDownload=true';
+
+        var elDown = $('<div class="download"><a title="download \'' + objDraw.id + '\'" href="' + url + '">download</a></div>');
         objDraw.el.append(elDown);
       }
     }
