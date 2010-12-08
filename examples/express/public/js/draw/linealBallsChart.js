@@ -11,11 +11,11 @@
     if(!_data.points) return null;
 
     var options = {
-      //      coolAxes: {
-      //        show: true,
-      //        type: 'tobiReloaded',
-      //        borderWidth: 1
-      //      },
+      coolAxes: {
+        show: true,
+        type: 'tobiReloaded',
+        borderWidth: 1
+      },
 
       colors: ['#bbc4da', '#3f5086', '#fc4242'],
 

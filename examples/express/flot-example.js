@@ -61,7 +61,7 @@ app.get('/draw/:module_name', function(req, res){
          height: Number(req.query.height)
        }
 
-    // load data, in thi case using auto-request
+    // load data, in this case using auto-request
   drawback.loadData(3000, 'localhost', url, function(rawData){
     var data = JSON.parse(rawData)
 
@@ -70,7 +70,8 @@ app.get('/draw/:module_name', function(req, res){
 
     // draw
     drawback.draw(moduleDraw, {dims: dims, data: data.data}, function(err, buf){
-      if(err) return;
+      if(err) res.send(404);
+
       var header = {};
 
       if(forceDownload) res.attachment(modname);
@@ -80,9 +81,9 @@ app.get('/draw/:module_name', function(req, res){
       res.send(buf, header);
     });
 
-  })
+  });
 
-})
+});
 
 app.listen(3000);
 console.log('Express app started on port 3000');
