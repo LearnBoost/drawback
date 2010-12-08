@@ -135,7 +135,7 @@
     );
 };
 
-//module.exports.flot = true;
+module.exports.flot = true;
 
 
 // executes (client side) or exports the module (server side)

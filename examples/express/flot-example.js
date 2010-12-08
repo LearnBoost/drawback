@@ -81,7 +81,6 @@ app.get('/draw/:module_name', function(req, res){
       res.send(buf, header);
     });
 
-    console.log (data);
   })
 
 })
