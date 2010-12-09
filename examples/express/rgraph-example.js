@@ -87,10 +87,10 @@ app.get('/draw/:module_name', function(req, res){
           getElementById: function() {return null;}
         };
 
-        require(pub + '/js/RGraph/libraries/RGraph.common.core.js');
-        require(pub + '/js/RGraph/libraries/RGraph.common.context.js');
-        require(pub + '/js/RGraph/libraries/RGraph.common.zoom.js');
-        require(pub + '/js/RGraph/libraries/RGraph.led.js');
+        drawback.use(pub + '/js/RGraph/libraries/RGraph.common.core.js');
+        drawback.use(pub + '/js/RGraph/libraries/RGraph.common.context.js');
+        drawback.use(pub + '/js/RGraph/libraries/RGraph.common.zoom.js');
+        drawback.use(pub + '/js/RGraph/libraries/RGraph.led.js');
 
         // require the module to draw
         var moduleDraw = require(pub + '/js/draw/' + modname);

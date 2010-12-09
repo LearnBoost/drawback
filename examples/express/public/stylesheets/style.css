@@ -37,13 +37,19 @@ div#flot-chart, div#flot-chart-twin {
   height: 300px;
   position: relative;
 }
+
 div#flot-chart .download {
   top: 8px;
   right: 25px;
 }
 
-div#rgraph-chart, div#rgraph-chart-twin {
+
+div#rgraph-chart {
   width: 1000px;
   height: 100px;
   position: relative;
+}
+div#rgraph-chart .download {
+  bottom: 5px;
+  right: 5px;
 }
