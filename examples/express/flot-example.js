@@ -6,6 +6,7 @@ require.paths.unshift(__dirname + '/../../support');
 /*** Module dependencies. ***/
 var express = require('express')
   ,  drawback = require('../../lib/drawback')
+  ,  http = require('http');
 
 // Path to our public directory
 var pub = __dirname + '/public';
@@ -61,32 +62,43 @@ app.get('/draw/:module_name', function(req, res){
          height: Number(req.query.height)
        }
 
-    // load data, in this case using auto-request
-  drawback.loadData(3000, 'localhost', url, function(rawData){
-    var data = JSON.parse(rawData)
+    // create client to request
+    var client = http.createClient(3000, 'localhost')
+      ,  request = client.request('GET', url, {'host': 'localhost'});
+    request.end();
 
-    // require the module to draw
-    ,  moduleDraw = require(pub + '/js/draw/' + modname);
+    // get data
+    request.on('response', function (response) {
+      response.setEncoding('utf8');
+      var rawData = '';
+      response.on('data', function (chunk) {
+        rawData+=chunk;
+      });
+      response.on('end', function () {
+        var data = JSON.parse(rawData)
 
-    // add flot and coolAxes flot plugin
-    drawback.use(drawback.plugins.flot);
-    drawback.use(pub + '/js/draw/jquery.flot.text');
-    drawback.use(pub + '/js/draw/jquery.flot.coolAxes');
+        // require the module to draw
+        ,  moduleDraw = require(pub + '/js/draw/' + modname);
 
-    // draw
-    drawback.draw(moduleDraw, {dims: dims, data: data.data}, function(err, buf){
-      if(err) res.send(404);
+        // add flot and coolAxes flot plugin
+        drawback.use(drawback.plugins.flot);
+        drawback.use(pub + '/js/draw/jquery.flot.text');
+        drawback.use(pub + '/js/draw/jquery.flot.coolAxes');
 
-      var header = {};
+        // draw
+        drawback.draw(moduleDraw, {dims: dims, data: data.data}, function(err, buf){
+          if(err) res.send(404);
 
-      if(forceDownload) res.attachment(modname);
-      else header = {'Content-Type': 'image/png'}
+          var header = {};
 
-      header['Content-Length'] = buf.length;
-      res.send(buf, header);
+          if(forceDownload) res.attachment(modname);
+          else header = {'Content-Type': 'image/png'}
+
+          header['Content-Length'] = buf.length;
+          res.send(buf, header);
+        });
+      });
     });
-
-  });
 
 });
 
