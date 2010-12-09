@@ -8,6 +8,12 @@
   module.exports = function(data, element){
     var _data = data.data;
 
+    // add coolAces and text flot plugins
+    if(typeof __dirname != 'undefined') {
+      require(__dirname+ '/jquery.flot.text');
+      require(__dirname+ '/jquery.flot.coolAxes');
+    }
+
     if(!_data.points) return null;
 
     var options = {
@@ -145,7 +151,10 @@
     return plot.getCanvas();
 };
 
+module.exports.jqueryDummy = true;
 module.exports.flot = true;
+
+
 
 
 // executes (client side) or exports the module (server side)

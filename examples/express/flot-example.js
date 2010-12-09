@@ -80,11 +80,6 @@ app.get('/draw/:module_name', function(req, res){
         // require the module to draw
         ,  moduleDraw = require(pub + '/js/draw/' + modname);
 
-        // add flot and coolAxes flot plugin
-        drawback.use(drawback.plugins.flot);
-        drawback.use(pub + '/js/draw/jquery.flot.text');
-        drawback.use(pub + '/js/draw/jquery.flot.coolAxes');
-
         // draw
         drawback.draw(moduleDraw, {dims: dims, data: data.data}, function(err, buf){
           if(err) res.send(404);
