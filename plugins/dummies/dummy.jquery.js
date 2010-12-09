@@ -1,24 +1,3 @@
-/**
- * Module dependencies.
- */
-
-try {
-  var Canvas = require('../support/node-canvas/');
-} catch (err) {
-  try {
-    var Canvas = require('canvas');
-  } catch (err) {
-    throw err;
-  }
-}
-
-// JSON
-
-JSON.encode = JSON.stringify
-JSON.decode = JSON.parse
-
-window = {};
-
 // jQuery
 $ = jQuery = function(el){
   if (global == this) {
@@ -118,14 +97,6 @@ jQuery.trim = function(str){
 
 
 jQuery.browser = {};
-
-document = {
-  createElement: function(type){
-    if ('canvas' == type) {
-      return new Canvas;
-    }
-  }
-};
 
 jQuery.extend = function() {
 	// copy reference to target object

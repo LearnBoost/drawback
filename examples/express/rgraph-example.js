@@ -68,31 +68,6 @@ app.get('/draw/:module_name', function(req, res){
     response.on('end', function () {
       var data = JSON.parse(rawData);
 
-      try {
-        var Canvas = require('../../support/node-canvas/');
-      } catch (err) {
-        try {
-          var Canvas = require('canvas');
-        } catch (err) {
-          throw err;
-        }
-      }
-
-      // *** Dummy functons ***
-      window = {addEventListener: function () {return null;}}
-
-      document = {
-        createElement: function(type){
-          if ('canvas' == type) {return new Canvas;}
-        },
-        getElementById: function() {return null;}
-      };
-
-      drawback.use(pub + '/js/RGraph/libraries/RGraph.common.core.js');
-      drawback.use(pub + '/js/RGraph/libraries/RGraph.common.context.js');
-      drawback.use(pub + '/js/RGraph/libraries/RGraph.common.zoom.js');
-      drawback.use(pub + '/js/RGraph/libraries/RGraph.led.js');
-
       // require the module to draw
       var moduleDraw = require(pub + '/js/draw/' + modname);
 

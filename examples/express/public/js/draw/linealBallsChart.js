@@ -150,7 +150,6 @@
     return plot.getCanvas();
   };
 
-  module.exports.jqueryDummy = true;
   module.exports.flot = true;
 
 // executes (client side) or exports the module (server side)

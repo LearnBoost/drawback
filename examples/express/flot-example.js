@@ -86,7 +86,7 @@ app.get('/draw/:module_name', function(req, res){
 
           var header = {};
 
-          if(forceDownload) res.attachment(modname);
+          if(forceDownload) res.attachment(modname+'.png');
           else header = {'Content-Type': 'image/png'}
 
           header['Content-Length'] = buf.length;

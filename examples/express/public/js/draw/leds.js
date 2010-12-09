@@ -20,6 +20,8 @@
     return objCanvas;
   };
 
+  // add RGraph pluggin
+  module.exports.rgraph = true;
 
 
 // executes (client side) or exports the module (server side)

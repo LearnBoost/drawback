@@ -61,25 +61,7 @@ app.get('/draw/:module_name', function(req, res){
         rawData+=chunk;
       });
       response.on('end', function () {
-        var data = JSON.parse(rawData)
-        // *** Dummy functons ***
-        try {
-          var Canvas = require('../../support/node-canvas/');
-        } catch (err) {
-          try {
-            var Canvas = require('canvas');
-          } catch (err) {
-            throw err;
-          }
-        }
-
-        document = {
-          createElement: function(type){
-            if ('canvas' == type) {
-              return new Canvas;
-            }
-          }
-        };
+        var data = JSON.parse(rawData);
 
         // require the module to draw
         var moduleDraw = require(pub + '/js/draw/' + modname);

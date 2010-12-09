@@ -3,19 +3,19 @@ $(document).ready(function(){
   // SIMPLE exmaple
   if($('#simple').length) {
     DrawBack.draw('#chart', 'linealChart', 'getData', {
-      download: false,
+      download: true,
       urlBuilder: function (name, url, forceDownload) {
         return 'draw/' + name + '?url=/' + url;
       }
     });
 
-//    DrawBack.draw('#chart-twin', 'linealChart', 'getData', {
-//      sync: true,
-//      forceServer: true,
-//      urlBuilder: function (name, url, forceDownload) {
-//        return 'draw/' + name + '?url=/' + url;
-//      }
-//    });
+    DrawBack.draw('#chart-twin', 'linealChart', 'getData', {
+      sync: true,
+      forceServer: true,
+      urlBuilder: function (name, url, forceDownload) {
+        return 'draw/' + name + '?url=/' + url;
+      }
+    });
   }
 
   // FLOT exmaple
