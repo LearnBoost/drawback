@@ -52,63 +52,64 @@ app.get('/draw/:module_name', function(req, res){
          height: Number(req.query.height)
        }
 
-    // create client to request
-    var client = http.createClient(3000, 'localhost')
-      ,  request = client.request('GET', url, {'host': 'localhost'});
-    request.end();
+  // create client to request
+  var client = http.createClient(3000, 'localhost')
+    ,  request = client.request('GET', url, {'host': 'localhost'});
+  request.end();
 
-    // get data
-    request.on('response', function (response) {
-      response.setEncoding('utf8');
-      var rawData = '';
-      response.on('data', function (chunk) {
-        rawData+=chunk;
-      });
-      response.on('end', function () {
-        var data = JSON.parse(rawData);
+  // get data
+  request.on('response', function (response) {
+    response.setEncoding('utf8');
+    var rawData = '';
+    response.on('data', function (chunk) {
+      rawData+=chunk;
+    });
 
-        // *** Dummy functons ***
+    response.on('end', function () {
+      var data = JSON.parse(rawData);
+
+      try {
+        var Canvas = require('../../support/node-canvas/');
+      } catch (err) {
         try {
-          var Canvas = require('../../support/node-canvas/');
+          var Canvas = require('canvas');
         } catch (err) {
-          try {
-            var Canvas = require('canvas');
-          } catch (err) {
-            throw err;
-          }
+          throw err;
         }
+      }
 
-        window = {addEventListener: function () {return null;}}
+      // *** Dummy functons ***
+      window = {addEventListener: function () {return null;}}
 
-        document = {
-          createElement: function(type){
-            if ('canvas' == type) {return new Canvas;}
-          },
-          getElementById: function() {return null;}
-        };
+      document = {
+        createElement: function(type){
+          if ('canvas' == type) {return new Canvas;}
+        },
+        getElementById: function() {return null;}
+      };
 
-        drawback.use(pub + '/js/RGraph/libraries/RGraph.common.core.js');
-        drawback.use(pub + '/js/RGraph/libraries/RGraph.common.context.js');
-        drawback.use(pub + '/js/RGraph/libraries/RGraph.common.zoom.js');
-        drawback.use(pub + '/js/RGraph/libraries/RGraph.led.js');
+      drawback.use(pub + '/js/RGraph/libraries/RGraph.common.core.js');
+      drawback.use(pub + '/js/RGraph/libraries/RGraph.common.context.js');
+      drawback.use(pub + '/js/RGraph/libraries/RGraph.common.zoom.js');
+      drawback.use(pub + '/js/RGraph/libraries/RGraph.led.js');
 
-        // require the module to draw
-        var moduleDraw = require(pub + '/js/draw/' + modname);
+      // require the module to draw
+      var moduleDraw = require(pub + '/js/draw/' + modname);
 
-        // draw
-        drawback.draw(moduleDraw, {dims: dims, data: data.data}, function(err, buf){
-          if(err) res.send(404);
+      // draw
+      drawback.draw(moduleDraw, {dims: dims, data: data.data}, function(err, buf){
+        if(err) res.send(404);
 
-          var header = {};
+        var header = {};
 
-          if(forceDownload) res.attachment(modname);
-          else header = {'Content-Type': 'image/png'}
+        if(forceDownload) res.attachment(modname);
+        else header = {'Content-Type': 'image/png'}
 
-          header['Content-Length'] = buf.length;
-          res.send(buf, header);
-        });
+        header['Content-Length'] = buf.length;
+        res.send(buf, header);
       });
     });
+  });
 
 });
 

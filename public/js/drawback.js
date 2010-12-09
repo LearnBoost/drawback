@@ -60,16 +60,8 @@
 
         // forceServer property
         // if set to true it ignores browser rendering and always does server side rendering.
-        if(objDraw.options.forceServer) {
-
-          // urlBuilder function
-          // A function that constructs the url for server fallback.
-          // It gets the drawing name and data url as parameters.
-          // There's also a third argument called forceDownload, which is set to true for the download link construction.
-          server_url = objDraw.options.urlBuilder(objDraw.id, objDraw.url, false);
-
-          if(server_url) self.renderFallback(server_url, objDraw);
-        }
+        if(objDraw.options.forceServer)
+          self.renderFallback(objDraw);
         else if(url != undefined)
             this.requestData(objDraw);
           else {
@@ -111,10 +103,16 @@
      * renderFallback method
      * make a ajax request to rendering in server side.
      */
-    renderFallback: function (url, objDraw) {
+    renderFallback: function (objDraw) {
       $(objDraw.el).addClass('loading');
 
-      var _url = this._modUrl(url, objDraw);
+      // urlBuilder function
+      // A function that constructs the url for server fallback.
+      // It gets the drawing name and data url as parameters.
+      // There's also a third argument called forceDownload, which is set to true for the download link construction.
+
+      var url = objDraw.options.urlBuilder(objDraw.id, objDraw.url, false)
+        ,  _url = this._modUrl(url, objDraw);
 
       // create obj element image
       var img = new Image();
@@ -138,8 +136,15 @@
 
       var canvas = objDraw.fn(data, objDraw.el);
 
-      // insert canvas response into element
-      $(objDraw.el).append(canvas);
+      // browser canvas support ?
+      if(canvas !== false) {
+        // insert canvas response into element
+        $(objDraw.el).append(canvas);
+      }
+      else {
+        // if not canvas supported then make rendering in server side
+        this.renderFallback(objDraw);
+      }
 
       // whether to include a download button along with the . If set to true, it injects an element like this before the target element.
       if(objDraw.options.download) {
