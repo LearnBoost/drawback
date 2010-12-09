@@ -41,3 +41,9 @@ div#flot-chart .download {
   top: 8px;
   right: 25px;
 }
+
+div#rgraph-chart, div#rgraph-chart-twin {
+  width: 1000px;
+  height: 100px;
+  position: relative;
+}

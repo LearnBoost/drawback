@@ -24,17 +24,21 @@ app.set('view engine', 'jade');
 
 
 app.get('/', function(req, res){
-  res.render('partials/simple', {});
+  res.render('partials/rgraph', {layout:'layout.rgraph.jade'});
 });
 
-// Respondemos al cliente con los datos (en formato JSON) que serán utilizados para implementar el gráfico
+// response ajax request
 app.get('/getData', function(req, res){
-    var data = [];
+  var rndComp = function () {
+    return Math.floor(255/(Math.random()*4 + 1));
+  }
 
-    for (i = 0; i < 20; i++)
-      data.push(Math.floor(Math.random()*(99 - 0 + 1) + 0));
-
-    res.send({ data: data });
+  res.send({
+    data: {
+      txt: new Date(),
+      color: 'rgba('+rndComp()+','+rndComp()+','+rndComp()+',1)'
+    }
+  });
 })
 
 // rendering server side
@@ -48,7 +52,7 @@ app.get('/draw/:module_name', function(req, res){
          height: Number(req.query.height)
        }
 
-      // create client to request
+    // create client to request
     var client = http.createClient(3000, 'localhost')
       ,  request = client.request('GET', url, {'host': 'localhost'});
     request.end();
@@ -61,7 +65,8 @@ app.get('/draw/:module_name', function(req, res){
         rawData+=chunk;
       });
       response.on('end', function () {
-        var data = JSON.parse(rawData)
+        var data = JSON.parse(rawData);
+
         // *** Dummy functons ***
         try {
           var Canvas = require('../../support/node-canvas/');
@@ -73,19 +78,27 @@ app.get('/draw/:module_name', function(req, res){
           }
         }
 
+        window = {addEventListener: function () {return null;}}
+
         document = {
           createElement: function(type){
-            if ('canvas' == type) {
-              return new Canvas;
-            }
-          }
+            if ('canvas' == type) {return new Canvas;}
+          },
+          getElementById: function() {return null;}
         };
+
+        require(pub + '/js/RGraph/libraries/RGraph.common.core.js');
+        require(pub + '/js/RGraph/libraries/RGraph.common.context.js');
+        require(pub + '/js/RGraph/libraries/RGraph.common.zoom.js');
+        require(pub + '/js/RGraph/libraries/RGraph.led.js');
 
         // require the module to draw
         var moduleDraw = require(pub + '/js/draw/' + modname);
 
+        // draw
         drawback.draw(moduleDraw, {dims: dims, data: data.data}, function(err, buf){
-          if(err) return;
+          if(err) res.send(404);
+
           var header = {};
 
           if(forceDownload) res.attachment(modname);
@@ -94,10 +107,10 @@ app.get('/draw/:module_name', function(req, res){
           header['Content-Length'] = buf.length;
           res.send(buf, header);
         });
-      })
-    })
+      });
+    });
 
-})
+});
 
 app.listen(3000);
 console.log('Express app started on port 3000');

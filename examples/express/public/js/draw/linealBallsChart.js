@@ -93,7 +93,6 @@
       options = $.extend(options, {
         coolLabel: {
           show: true,
-          type: 'tobiRevolution',
           borderWidth: 1,
           borderColor: 'rgba(0, 0, 0, 0.9)',
           bgColor: 'rgba(255, 255, 0, 0.9)',
@@ -149,13 +148,10 @@
     );
 
     return plot.getCanvas();
-};
+  };
 
-module.exports.jqueryDummy = true;
-module.exports.flot = true;
-
-
-
+  module.exports.jqueryDummy = true;
+  module.exports.flot = true;
 
 // executes (client side) or exports the module (server side)
 if (typeof window != 'undefined' && 'DrawBack' in window)
