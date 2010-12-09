@@ -10,8 +10,8 @@
 
     // add coolAces and text flot plugins
     if(typeof __dirname != 'undefined') {
-      require(__dirname+ '/jquery.flot.text');
-      require(__dirname+ '/jquery.flot.coolAxes');
+      require('../flot-plugins/jquery.flot.text');
+      require('../flot-plugins/jquery.flot.coolAxes');
     }
 
     if(!_data.points) return null;
