@@ -29,7 +29,6 @@ app.get('/', function(req, res){
 
 // Respondemos al cliente con los datos (en formato JSON) que serán utilizados para implementar el gráfico
 app.get('/getData', function(req, res){
-  setTimeout(function() {
     var data = [];
 
     for (i = 0; i < 20; i++)
@@ -38,7 +37,6 @@ app.get('/getData', function(req, res){
     res.send({
       data: data
     });
-  }, 1000);
 })
 
 // rendering server side
@@ -89,21 +87,18 @@ app.get('/draw/:module_name', function(req, res){
         // require the module to draw
         var moduleDraw = require(pub + '/js/draw/' + modname);
 
-        setTimeout(function() {
-          drawback.draw(moduleDraw, {dims: dims, data: data.data}, function(err, buf){
-            if(err) return;
-            var header = {};
+        drawback.draw(moduleDraw, {dims: dims, data: data.data}, function(err, buf){
+          if(err) return;
+          var header = {};
 
-            if(forceDownload) res.attachment(modname);
-            else header = {'Content-Type': 'image/png'}
+          if(forceDownload) res.attachment(modname);
+          else header = {'Content-Type': 'image/png'}
 
-            header['Content-Length'] = buf.length;
-            res.send(buf, header);
-          });
-        }, 500);
+          header['Content-Length'] = buf.length;
+          res.send(buf, header);
+        });
       })
     })
-
 
 })
 
