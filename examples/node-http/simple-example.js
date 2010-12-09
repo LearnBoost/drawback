@@ -27,7 +27,6 @@ http.createServer(function (req, res) {
     console.log (parseUrl);
 
     // load js files
-//    if(parseUrl.pathname.search(/.js$/)) {
     if(false) {
       res.writeHead(304, {'Content-Type': 'application/javascript'});
       res.write(fs.readFileSync('js/drawback.js'));

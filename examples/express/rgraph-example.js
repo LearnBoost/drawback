@@ -35,7 +35,7 @@ app.get('/getData', function(req, res){
 
   res.send({
     data: {
-      txt: new Date(),
+      txt: 'learnboost ' + (new Date().toString()).substring(16, 24),
       color: 'rgba('+rndComp()+','+rndComp()+','+rndComp()+',1)'
     }
   });
