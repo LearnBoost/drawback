@@ -6,6 +6,7 @@ require.paths.unshift(__dirname + '/../../support');
 /*** Module dependencies. ***/
 var express = require('express')
   ,  drawback = require('../../lib/drawback')
+  ,  http = require('http');
 
 // Path to our public directory
 var pub = __dirname + '/public';
@@ -51,46 +52,58 @@ app.get('/draw/:module_name', function(req, res){
          height: Number(req.query.height)
        }
 
-  // load data, in thi case using auto-request
-  drawback.loadData(3000, 'localhost', url, function(rawData){
-    // *** Dummy functons ***
-    // node-canvas
-    try {
-      var Canvas = require('../../support/node-canvas/');
-    } catch (err) {
-      try {
-        var Canvas = require('canvas');
-      } catch (err) {
-        throw err;
-      }
-}
+      // create client to request
+    var client = http.createClient(3000, 'localhost')
+      ,  request = client.request('GET', url, {'host': 'localhost'});
+    request.end();
 
-    document = {
-      createElement: function(type){
-        if ('canvas' == type) {
-          return new Canvas;
-        }
-      }
-    };
-
-   var data = JSON.parse(rawData)
-
-    // require the module to draw
-    ,  moduleDraw = require(pub + '/js/draw/' + modname);
-
-    setTimeout(function() {
-      drawback.draw(moduleDraw, {dims: dims, data: data.data}, function(err, buf){
-        if(err) return;
-        var header = {};
-
-        if(forceDownload) res.attachment(modname);
-        else header = {'Content-Type': 'image/png'}
-
-        header['Content-Length'] = buf.length;
-        res.send(buf, header);
+    // get data
+    request.on('response', function (response) {
+      response.setEncoding('utf8');
+      var rawData = '';
+      response.on('data', function (chunk) {
+        rawData+=chunk;
       });
-    }, 500);
-  })
+      response.on('end', function () {
+        var data = JSON.parse(rawData)
+        // *** Dummy functons ***
+        // node-canvas
+        try {
+          var Canvas = require('../../support/node-canvas/');
+        } catch (err) {
+          try {
+            var Canvas = require('canvas');
+          } catch (err) {
+            throw err;
+          }
+        }
+
+        document = {
+          createElement: function(type){
+            if ('canvas' == type) {
+              return new Canvas;
+            }
+          }
+        };
+
+        // require the module to draw
+        var moduleDraw = require(pub + '/js/draw/' + modname);
+
+        setTimeout(function() {
+          drawback.draw(moduleDraw, {dims: dims, data: data.data}, function(err, buf){
+            if(err) return;
+            var header = {};
+
+            if(forceDownload) res.attachment(modname);
+            else header = {'Content-Type': 'image/png'}
+
+            header['Content-Length'] = buf.length;
+            res.send(buf, header);
+          });
+        }, 500);
+      })
+    })
+
 
 })
 
