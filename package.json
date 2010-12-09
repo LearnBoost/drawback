@@ -1,0 +1,11 @@
+{ "name": "drawback"
+, "description":  "The LearnBoost drawing framework provides a seamless way to render 2D drawings on the client side using HTML5 technologies with a server-side backend."
+, "version":  "0.0.1"
+, "author": "LearnBoost <dev@learnboost.com>"
+, "dependencies": { "node-cavnas": "0.7.9"}
+, "keywords": [ "canvas", "node-canvas", "drawback" ]
+, "directories":  { "lib": "./lib" }
+, "engines": { "node": ">= 0.3.3" }
+, "main": "./"
+, "licenses": [ { "type": "The MIT License", "url": "http://www.opensource.org/licenses/mit-license.php" } ]
+}
