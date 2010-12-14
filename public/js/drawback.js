@@ -1,3 +1,4 @@
+console.log('drawback.js');
 
 (function($){
 
@@ -67,13 +68,18 @@
           else {
             this.process(objDraw);
           }
+
+        return objDraw;
       }
       else {
         console.error('There is no function associated with `' + draw_id + '` id.\n');
         console.log ('ensure:');
         console.warn ('  Exists `' + draw_id + '.js`.');
         console.warn ('  Exists a registered method named `' + draw_id + '`.');
+
+        return null;
       }
+
     },
 
     /**
@@ -123,6 +129,9 @@
 
       img.onload = function() {
         $(objDraw.el).removeClass('loading');
+        console.debug ("objDraw.el -> ", objDraw.el);
+//        $(objDraw.el).empty();
+
         $(objDraw.el).append(img);
       }
     },
