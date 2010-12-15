@@ -1,5 +1,3 @@
-console.log('drawback.js');
-
 (function($){
 
   // *** DrawBack ***
@@ -122,15 +120,14 @@ console.log('drawback.js');
 
       // create obj element image
       var img = new Image();
-      $(img).attr('width', objDraw.dims.width);
-      $(img).attr('height', objDraw.dims.height);
+//      $(img).attr('width', objDraw.dims.width);
+//      $(img).attr('height', objDraw.dims.height);
 
       img.src = _url;
 
       img.onload = function() {
         $(objDraw.el).removeClass('loading');
-        console.debug ("objDraw.el -> ", objDraw.el);
-//        $(objDraw.el).empty();
+        $(objDraw.el).empty();
 
         $(objDraw.el).append(img);
       }

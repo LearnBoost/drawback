@@ -5,7 +5,10 @@ $ = jQuery = function(el){
   } else if (el instanceof jQuery) {
     return el;
   } else {
-    this.width = function(){return el.width};
+    this.width = function(){
+      if(arguments && arguments[0]) el.width = Number(arguments[0]);
+      else return el.width
+    };
     this.height = function(){return el.height;};
     this.html = function(){};
     this.remove = function(){};
