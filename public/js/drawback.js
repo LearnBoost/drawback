@@ -159,18 +159,15 @@
           dims: objDraw.dims,
           data: objDraw.data.data
         }
-        ,  cssClass = objDraw.options.name || objDraw.id;
-
+        ,  cssClass = 'graph-' + (objDraw.options.name || objDraw.id);
 
       var canvas = objDraw.fn(data, objDraw.el);
 
       // browser canvas support ?
       if(canvas !== false) {
         // insert canvas response into element
-//        $(objDraw.el).find('.'+cssClass).remove();
-        $(objDraw.el).find('canvas').remove();
+        $(objDraw.el).find('.'+cssClass).remove();
         $(canvas).addClass(cssClass);
-
         $(objDraw.el).append(canvas);
       }
       else {
