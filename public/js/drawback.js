@@ -156,16 +156,20 @@
     process: function (objDraw) {
       // execute function
       var data = {
-        dims: objDraw.dims,
-        data: objDraw.data.data
-      }
+          dims: objDraw.dims,
+          data: objDraw.data.data
+        }
+        ,  cssClass = objDraw.options.name || objDraw.id;
+
 
       var canvas = objDraw.fn(data, objDraw.el);
 
       // browser canvas support ?
       if(canvas !== false) {
         // insert canvas response into element
-        $(objDraw.el).empty();
+        $(objDraw.el).find('.'+cssClass).remove();
+        $(canvas).addClass(cssClass);
+
         $(objDraw.el).append(canvas);
       }
       else {

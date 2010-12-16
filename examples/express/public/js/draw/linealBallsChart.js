@@ -3,7 +3,7 @@
  * @module
  */
 
-(function(module){
+(function(module, serverSide){
 
   module.exports = function(data, element){
     var _data = data.data;
@@ -41,13 +41,6 @@
       },
 
       grid: {
-        canvasText: {
-          show: true,
-          font: "sans 8px",
-          series: null,
-          seriesFont: "sans 8px",
-          lineBreaks: {show: false, marginTop: 3, marginBottom: 5, lineSpacing: 1}
-        },
         show: true,
         borderWidth: 0,
         borderColor: '#474747',
@@ -104,6 +97,18 @@
       })
     }
 
+    if(serverSide) {
+      options.grid = $.extend(options.grid, {
+        canvasText: {
+          show: true,
+          font: "sans 8px",
+          series: null,
+          seriesFont: "sans 8px",
+          lineBreaks: {show: false, marginTop: 3, marginBottom: 5, lineSpacing: 1}
+        }
+      })
+    }
+
     options = $.extend(options, _data.opts);
 
 
@@ -156,4 +161,4 @@
 if (typeof window != 'undefined' && 'DrawBack' in window)
   DrawBack.register('linealBallsChart', module.exports);
 
-})(typeof module != 'undefined' ? module : {});
+})(typeof module != 'undefined' ? module : {}, typeof module != 'undefined' ? true : false);
