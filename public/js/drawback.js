@@ -167,7 +167,8 @@
       // browser canvas support ?
       if(canvas !== false) {
         // insert canvas response into element
-        $(objDraw.el).find('.'+cssClass).remove();
+//        $(objDraw.el).find('.'+cssClass).remove();
+        $(objDraw.el).find('canvas').remove();
         $(canvas).addClass(cssClass);
 
         $(objDraw.el).append(canvas);
