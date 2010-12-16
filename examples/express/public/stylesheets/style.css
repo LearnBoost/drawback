@@ -3,6 +3,17 @@ body {
   font: 14px "Helvetica Nueue", "Lucida Grande", Arial, sans-serif;
 }
 
+a {
+  font: normal normal normal 12px Helvetica;
+  color: #06A;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #06C;
+  text-decoration: underline;
+}
+
 h4 {
   margin: 5px 0;
   color: #88a;

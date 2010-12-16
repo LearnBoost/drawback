@@ -31,8 +31,35 @@
       return _url;
     },
 
+    _addMethodsToObject: function (objDraw) {
+      var self = this;
+
+      // refresh method
+      objDraw.refresh = function () {
+
+        if(objDraw.options.forceServer)
+          self.renderFallback(objDraw, true);
+        else
+          self._draw(objDraw);
+      }
+    },
+
+    _draw: function (objDraw) {
+      // forceServer property
+        // if set to true it ignores browser rendering and always does server side rendering.
+        if(objDraw.options.forceServer)
+          this.renderFallback(objDraw);
+        else if(objDraw.url != undefined)
+            this.requestData(objDraw);
+          else {
+            this.process(objDraw);
+          }
+
+        return objDraw;
+    },
+
     /**
-    * draw method
+    * draw method (pseudo constructor)
     */
     draw: function (el_id, draw_id, url, options) {
       var self = this
@@ -57,17 +84,10 @@
           }, options)
         }, objDraw);
 
-        // forceServer property
-        // if set to true it ignores browser rendering and always does server side rendering.
-        if(objDraw.options.forceServer)
-          self.renderFallback(objDraw);
-        else if(url != undefined)
-            this.requestData(objDraw);
-          else {
-            this.process(objDraw);
-          }
+        // add methods to drawback object
+        this._addMethodsToObject(objDraw);
 
-        return objDraw;
+        return this._draw(objDraw);
       }
       else {
         console.error('There is no function associated with `' + draw_id + '` id.\n');
@@ -107,7 +127,7 @@
      * renderFallback method
      * make a ajax request to rendering in server side.
      */
-    renderFallback: function (objDraw) {
+    renderFallback: function (objDraw, refresh) {
       $(objDraw.el).addClass('loading');
 
       // urlBuilder function
@@ -123,14 +143,14 @@
 //      $(img).attr('width', objDraw.dims.width);
 //      $(img).attr('height', objDraw.dims.height);
 
-      img.src = _url;
+      img.src = _url + (refresh ? '&rnd='+(+new Date) : '');
 
       img.onload = function() {
         $(objDraw.el).removeClass('loading');
         $(objDraw.el).empty();
-
         $(objDraw.el).append(img);
       }
+
     },
 
     process: function (objDraw) {
@@ -145,6 +165,7 @@
       // browser canvas support ?
       if(canvas !== false) {
         // insert canvas response into element
+        $(objDraw.el).empty();
         $(objDraw.el).append(canvas);
       }
       else {
