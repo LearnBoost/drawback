@@ -169,6 +169,9 @@
         $(objDraw.el).find('.'+cssClass).remove();
         $(canvas).addClass(cssClass);
         $(objDraw.el).append(canvas);
+
+        $(objDraw).trigger('chartReady', [objDraw.data]);
+
       }
       else {
         // if not canvas supported then make rendering in server side
@@ -182,8 +185,7 @@
 
         if(src.search(/forceDownload=/) < 0) src+= '&forceDownload=true';
 
-        var elDown = $('<div class="download"><a title="download \'' + objDraw.id + '\'" href="' + src + '">download</a></div>');
-        objDraw.el.append(elDown);
+        objDraw.el.append($('<div class="download"><a title="download \'' + objDraw.id + '\'" href="' + src + '">download</a></div>'));
       }
     }
   }
