@@ -35,7 +35,8 @@
       var self = this;
 
       // refresh method
-      objDraw.refresh = function () {
+      objDraw.refresh = function (url) {
+        if(url) objDraw.url = url;
 
         if(objDraw.options.forceServer)
           self.renderFallback(objDraw, true);
@@ -62,8 +63,7 @@
     * draw method (pseudo constructor)
     */
     draw: function (el_id, draw_id, url, options) {
-      var self = this
-        ,  objDraw = this._stack_[draw_id]
+      var objDraw = this._stack_[draw_id];
 
       if(objDraw) {
         var el = $(el_id);
