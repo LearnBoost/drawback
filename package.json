@@ -6,7 +6,7 @@
   , "contributors": [
       { "name": "Guillermo Rauch", "email": "guillermo@learnboost.com" }
     ]
-  , "dependencies": { "node-canvas": "0.7.9"}
+  , "dependencies": { "canvas": "0.4.0"}
   , "keywords": [ "canvas", "node-canvas", "drawback" ]
   , "directories":  { "lib": "./lib/drawback" }
   , "engines": { "node": ">= 0.2.5" }
