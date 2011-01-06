@@ -1,14 +1,29 @@
-{ 
-    "name": "drawback"
-  , "description":  "The drawback framework provides a seamless way to render 2D drawings on the client side using HTML5 technologies with a server-side backend."
-  , "version":  "0.0.5"
-  , "author": "Damian Suarez <damian@learnboost.com>"
-  , "contributors": [
-      { "name": "Guillermo Rauch", "email": "guillermo@learnboost.com" }
-    ]
-  , "dependencies": { "canvas": "0.4.0"}
-  , "keywords": [ "canvas", "node-canvas", "drawback" ]
-  , "directories":  { "lib": "./lib/drawback" }
-  , "engines": { "node": ">= 0.2.5" }
-  , "licenses": [ { "type": "The MIT License", "url": "http://www.opensource.org/licenses/mit-license.php" } ]
+{
+  "name": "drawback",
+  "description": "The drawback framework provides a seamless way to render 2D drawings on the client side using HTML5 technologies with a server-side backend.",
+  "version": "0.0.5",
+  "author": "Damian Suarez <damian@learnboost.com>",
+  "contributors": [
+    "Guillermo Rauch <guillermo@learnboost.com>"
+  ],
+  "dependencies": {
+    "canvas": "0.4.0"
+  },
+  "keywords": [
+    "canvas",
+    "node-canvas",
+    "drawback"
+  ],
+  "directories": {
+    "lib": "./lib/drawback"
+  },
+  "engines": {
+    "node": ">= 0.2.5"
+  },
+  "licenses": [
+    {
+      "type": "The MIT License",
+      "url": "http://www.opensource.org/licenses/mit-license.php"
+    }
+  ]
 }
