@@ -1,7 +1,7 @@
 { 
     "name": "drawback"
   , "description":  "The drawback framework provides a seamless way to render 2D drawings on the client side using HTML5 technologies with a server-side backend."
-  , "version":  "0.0.4"
+  , "version":  "0.0.5"
   , "author": "Damian Suarez <damian@learnboost.com>"
   , "contributors": [
       { "name": "Guillermo Rauch", "email": "guillermo@learnboost.com" }
