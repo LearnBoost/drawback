@@ -175,7 +175,8 @@
 
         if(objDraw.options.autoInject) {
           var canvas = objDraw.fn(data, objDraw.el);
-//          $(objDraw.el).append(canvas);
+          $(objDraw.el).empty();
+          $(objDraw.el).append(canvas);
           $(objDraw).trigger('chartReady', [objDraw.data]);
         }
       }
