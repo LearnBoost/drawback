@@ -78,6 +78,7 @@
             height: el.height()
           },
           options: $.extend({
+            autoInject: true,
             sync: false,
             download: true,
             forceServer: false
@@ -140,8 +141,6 @@
 
       // create obj element image
       var img = new Image();
-//      $(img).attr('width', objDraw.dims.width);
-//      $(img).attr('height', objDraw.dims.height);
 
       img.src = _url + (refresh ? '&rnd='+(+new Date) : '');
 
@@ -149,6 +148,9 @@
         $(objDraw.el).removeClass('loading');
         $(objDraw.el).empty();
         $(objDraw.el).append(img);
+
+        $(objDraw).trigger('imgReady', [objDraw]);
+        if(objDraw.options.onImgReady) objDraw.options.onImgReady(objDraw);
       }
 
     },
@@ -161,17 +163,21 @@
         }
         ,  cssClass = 'graph-' + (objDraw.options.name || objDraw.id);
 
-      var canvas = objDraw.fn(data, objDraw.el);
+      var canvasSupport = document.createElement("canvas") ? true : false;
 
       // browser canvas support ?
-      if(canvas !== false) {
+      if(canvasSupport) {
+
         // insert canvas response into element
         $(objDraw.el).find('.'+cssClass).remove();
-        $(canvas).addClass(cssClass);
-        $(objDraw.el).append(canvas);
+        $(objDraw.el).addClass(cssClass);
+        $(objDraw).trigger('canvasReady', [objDraw.data]);
 
-        $(objDraw).trigger('chartReady', [objDraw.data]);
-
+        if(objDraw.options.autoInject) {
+          var canvas = objDraw.fn(data, objDraw.el);
+//          $(objDraw.el).append(canvas);
+          $(objDraw).trigger('chartReady', [objDraw.data]);
+        }
       }
       else {
         // if not canvas supported then make rendering in server side
