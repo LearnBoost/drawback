@@ -18,6 +18,10 @@ $ = jQuery = function(el){
     this.css = function(){return this;};
     this.get = function(){return el;};
 
+    // dummy events
+    this.mousemove= function(){return {};};
+    this.click= function(){return {};};
+
     this.children = function(str){return $(el);}
   }
 };
