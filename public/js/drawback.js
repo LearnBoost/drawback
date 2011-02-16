@@ -11,6 +11,8 @@
     _stack_: {},
 
     start: function () {
+      var testCanvas = document.createElement("canvas")
+      this.canvasSupport = testCanvas.getContext ? true : false
     },
 
     register: function(name, fn){
@@ -163,11 +165,8 @@
         }
         ,  cssClass = 'graph-' + (objDraw.options.name || objDraw.id);
 
-      var canvasSupport = document.createElement("canvas") ? true : false;
-
       // browser canvas support ?
-      if(canvasSupport) {
-
+      if(this.canvasSupport) {
         // insert canvas response into element
         $(objDraw.el).find('.'+cssClass).remove();
         $(objDraw.el).addClass(cssClass);
