@@ -27,7 +27,7 @@
       var _addAtt = function (att, str, objDraw) {
         return str + (str.search('&'+att)< 0 ? '&'+att + '='+ $(objDraw.el)[att]() : '')
       }
-        ,  _url = _addAtt('width', url, objDraw);
+        , _url = _addAtt('width', url, objDraw);
 
       _url = _addAtt('height', _url, objDraw);
       return _url;
@@ -160,13 +160,16 @@
     process: function (objDraw) {
       // execute function
       var data = {
-          dims: objDraw.dims,
-          data: objDraw.data.data
-        }
-        ,  cssClass = 'graph-' + (objDraw.options.name || objDraw.id);
+        dims: objDraw.dims,
+        data: objDraw.data.data
+      }
+        , cssClass = 'graph-' + (objDraw.options.name || objDraw.id);
+
+      var canvasSupport = document.createElement("canvas") ? true : false;
 
       // browser canvas support ?
       if(this.canvasSupport) {
+
         // insert canvas response into element
         $(objDraw.el).find('.'+cssClass).remove();
         $(objDraw.el).addClass(cssClass);
@@ -174,8 +177,6 @@
 
         if(objDraw.options.autoInject) {
           var canvas = objDraw.fn(data, objDraw.el);
-          $(objDraw.el).empty();
-          $(objDraw.el).append(canvas);
           $(objDraw).trigger('chartReady', [objDraw.data]);
         }
       }
