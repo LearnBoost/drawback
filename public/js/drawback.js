@@ -11,8 +11,7 @@
     _stack_: {},
 
     start: function () {
-      var testCanvas = document.createElement("canvas")
-      this.canvasSupport = testCanvas.getContext ? true : false
+      this.canvasSupport = document.createElement("canvas").getContext ? true : false;
     },
 
     register: function(name, fn){
@@ -27,7 +26,7 @@
       var _addAtt = function (att, str, objDraw) {
         return str + (str.search('&'+att)< 0 ? '&'+att + '='+ $(objDraw.el)[att]() : '')
       }
-        , _url = _addAtt('width', url, objDraw);
+        ,  _url = _addAtt('width', url, objDraw);
 
       _url = _addAtt('height', _url, objDraw);
       return _url;
@@ -160,12 +159,10 @@
     process: function (objDraw) {
       // execute function
       var data = {
-        dims: objDraw.dims,
-        data: objDraw.data.data
-      }
-        , cssClass = 'graph-' + (objDraw.options.name || objDraw.id);
-
-      var canvasSupport = document.createElement("canvas") ? true : false;
+          dims: objDraw.dims,
+          data: objDraw.data.data
+        }
+        ,  cssClass = 'graph-' + (objDraw.options.name || objDraw.id);
 
       // browser canvas support ?
       if(this.canvasSupport) {
