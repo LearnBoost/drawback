@@ -13,6 +13,6 @@ require(__dirname + '/RGraph/libraries/RGraph.led.js');
 // module
 module.exports = function flot(module, data){
   return function(){
-    canvas = module(data, data.dims ? data.dims : {width: 0, height: 0})
+    var canvas = module(data, data.dims ? data.dims : {width: 0, height: 0})
   };
 };

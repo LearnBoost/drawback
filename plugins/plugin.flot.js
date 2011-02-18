@@ -10,6 +10,6 @@ require(__dirname + '/flot/jquery.flot');
 // module
 module.exports = function flot(module, data){
   return function(){
-    canvas = module(data, data.dims ? data.dims : {width: 0, height: 0})
+    var canvas = module(data, data.dims ? data.dims : {width: 0, height: 0})
   };
 };
