@@ -162,7 +162,7 @@
           dims: objDraw.dims,
           data: objDraw.data.data
         }
-        ,  cssClass = 'graph-' + (objDraw.options.name || objDraw.id);
+        , cssClass = 'graph-' + (objDraw.options.name || objDraw.id);
 
       // browser canvas support ?
       if(this.canvasSupport) {
@@ -174,6 +174,7 @@
 
         if(objDraw.options.autoInject) {
           var canvas = objDraw.fn(data, objDraw.el);
+          $(objDraw.el).empty().append(canvas);
           $(objDraw).trigger('chartReady', [objDraw.data]);
         }
       }
