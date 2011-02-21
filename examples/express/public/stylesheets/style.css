@@ -64,3 +64,11 @@ div#rgraph-chart .download {
   bottom: 5px;
   right: 5px;
 }
+
+.msn {
+  font: normal normal normal 12px/20px Helvetica;
+  color: #208;
+  padding: 1px 10px;
+  background-color: #FFA;
+  margin-top: -35px;
+}

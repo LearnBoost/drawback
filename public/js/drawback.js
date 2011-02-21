@@ -138,7 +138,7 @@
       // There's also a third argument called forceDownload, which is set to true for the download link construction.
 
       var url = objDraw.options.urlBuilder(objDraw.id, objDraw.url, false)
-        ,  _url = this._modUrl(url, objDraw);
+        , _url = this._modUrl(url, objDraw);
 
       // create obj element image
       var img = new Image();
@@ -150,8 +150,10 @@
         $(objDraw.el).empty();
         $(objDraw.el).append(img);
 
-        $(objDraw).trigger('imgReady', [objDraw]);
         if(objDraw.options.onImgReady) objDraw.options.onImgReady(objDraw);
+
+        // fireEvent canvasReady
+        $(objDraw).trigger('canvasReady', [objDraw, true]);
       }
 
     },
@@ -170,13 +172,15 @@
         // insert canvas response into element
         $(objDraw.el).find('.'+cssClass).remove();
         $(objDraw.el).addClass(cssClass);
-        $(objDraw).trigger('canvasReady', [objDraw.data]);
 
         if(objDraw.options.autoInject) {
           var canvas = objDraw.fn(data, objDraw.el);
           $(objDraw.el).empty().append(canvas);
           $(objDraw).trigger('chartReady', [objDraw.data]);
         }
+
+        // fireEvent canvasReady
+        $(objDraw).trigger('canvasReady', [objDraw.data, false]);
       }
       else {
         // if not canvas supported then make rendering in server side

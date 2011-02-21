@@ -5,8 +5,8 @@ require.paths.unshift(__dirname + '/../../support');
 
 /*** Module dependencies. ***/
 var express = require('express')
-  ,  drawback = require('../../lib/drawback')
-  ,  http = require('http');
+  , drawback = require('../../lib/drawback')
+  , http = require('http');
 
 // Path to our public directory
 var pub = __dirname + '/public';
@@ -27,7 +27,7 @@ app.get('/', function(req, res){
   res.render('partials/simple', {});
 });
 
-// Respondemos al cliente con los datos (en formato JSON) que serán utilizados para implementar el gráfico
+// response to client with JSON data that will use for build the graph
 app.get('/getData', function(req, res){
     var data = [];
 
@@ -41,25 +41,23 @@ app.get('/getData', function(req, res){
 app.get('/draw/:module_name', function(req, res){
   // retrieve url parameters
   var modname = req.param('module_name')
-    ,  url = req.query.url
-    ,  forceDownload = req.query.forceDownload == 'true' ? true : false
-    ,  dims = {
-         width: Number(req.query.width),
-         height: Number(req.query.height)
-       }
+    , url = req.query.url
+    , forceDownload = req.query.forceDownload == 'true' ? true : false
+    , dims = {
+        width: Number(req.query.width),
+        height: Number(req.query.height)
+      }
 
-      // create client to request
+    // create client to auto-request
     var client = http.createClient(3000, 'localhost')
-      ,  request = client.request('GET', url, {'host': 'localhost'});
+      , request = client.request('GET', url, {'host': 'localhost'});
     request.end();
 
     // get data
     request.on('response', function (response) {
       response.setEncoding('utf8');
       var rawData = '';
-      response.on('data', function (chunk) {
-        rawData+=chunk;
-      });
+      response.on('data', function (chunk) { rawData+=chunk; });
       response.on('end', function () {
         var data = JSON.parse(rawData);
 

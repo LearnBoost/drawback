@@ -1,6 +1,8 @@
 $(document).ready(function(){
 
-  // SIMPLE exmaple
+  // *** SIMPLE example ***
+
+  // canvas rendering (client side)
   if($('#simple').length) {
     var myLocalChart = DrawBack.draw('#chart', 'linealChart', 'getData', {
       download: true,
@@ -14,9 +16,17 @@ $(document).ready(function(){
       ev.preventDefault();
       myLocalChart.refresh();
     });
+    
+    // canvasReady event
+    $(myLocalChart).bind('canvasReady', function(ev, data, renserv){
+      $(this.el).append('<div class="msn">rendering ' + (renserv ? 'server' : 'client') + '</div>');
+      $(this.el).find('.msn').fadeOut(800, function(){
+//        $(this).remove();
+      })
+    });
 
 
-
+    // node-canvas rendering (server side)
     myRemoteChart = DrawBack.draw('#chart-twin', 'linealChart', 'getData', {
       sync: true,
       forceServer: true,
@@ -25,17 +35,26 @@ $(document).ready(function(){
       }
     });
 
-    // refresh chart
+    // refresh remote chart
     $('#simple').find('a.remote').click(function (ev) {
       ev.preventDefault();
       myRemoteChart.refresh();
+    });
+    
+    
+    // canvasReady event
+    $(myRemoteChart).bind('canvasReady', function(ev, data, renserv){
+      $(this.el).append('<div class="msn">rendering ' + (renserv ? 'server' : 'client') + '</div>');
+      $(this.el).find('.msn').fadeOut(800, function(){
+        $(this).remove();
+      })
     });
   }
 
 
 
 
-  // FLOT exmaple
+  // FLOT example
   if($('#flot-example').length) {
     DrawBack.draw('#flot-chart', 'linealBallsChart', 'getChartData', {
       download: true,
