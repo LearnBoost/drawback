@@ -20,8 +20,7 @@ window = {
 document = {
   createElement: function(type){
     if ('canvas' == type) {
-      var canvas = new Canvas;
-      return canvas;
+      return new Canvas;
     }
   },
   getElementById: function() {return null;}

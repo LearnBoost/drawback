@@ -10,9 +10,11 @@ require(__dirname + '/RGraph/libraries/RGraph.common.context.js');
 require(__dirname + '/RGraph/libraries/RGraph.common.zoom.js');
 require(__dirname + '/RGraph/libraries/RGraph.led.js');
 
-// module
-module.exports = function flot(module, data){
+// module method
+exports.rgraph = function (module, data){
   return function(){
-    var canvas = module(data, data.dims ? data.dims : {width: 0, height: 0})
+    var canvas = module(data, data.dims ? data.dims : {width: 0, height: 0});
+    return canvas;
   };
 };
+
