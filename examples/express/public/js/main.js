@@ -17,11 +17,11 @@ $(document).ready(function(){
       myLocalChart.refresh();
     });
     
-    // canvasReady event
-    $(myLocalChart).bind('canvasReady', function(ev, data, renserv){
+    // chartReady event
+    $(myLocalChart).bind('chartReady', function(ev, data, renserv){
       $(this.el).append('<div class="msn">rendering ' + (renserv ? 'server' : 'client') + '</div>');
       $(this.el).find('.msn').fadeOut(800, function(){
-//        $(this).remove();
+        $(this).remove();
       })
     });
 
@@ -42,8 +42,8 @@ $(document).ready(function(){
     });
     
     
-    // canvasReady event
-    $(myRemoteChart).bind('canvasReady', function(ev, data, renserv){
+    // chartReady event
+    $(myRemoteChart).bind('chartReady', function(ev, data, renserv){
       $(this.el).append('<div class="msn">rendering ' + (renserv ? 'server' : 'client') + '</div>');
       $(this.el).find('.msn').fadeOut(800, function(){
         $(this).remove();

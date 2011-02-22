@@ -26,7 +26,7 @@
       var _addAtt = function (att, str, objDraw) {
         return str + (str.search('&'+att)< 0 ? '&'+att + '='+ $(objDraw.el)[att]() : '')
       }
-        ,  _url = _addAtt('width', url, objDraw);
+        , _url = _addAtt('width', url, objDraw);
 
       _url = _addAtt('height', _url, objDraw);
       return _url;
@@ -96,7 +96,6 @@
         console.log ('ensure:');
         console.warn ('  Exists `' + draw_id + '.js`.');
         console.warn ('  Exists a registered method named `' + draw_id + '`.');
-
         return null;
       }
 
@@ -146,14 +145,12 @@
       img.src = _url + (refresh ? '&rnd='+(+new Date) : '');
 
       img.onload = function() {
-        $(objDraw.el).removeClass('loading');
-        $(objDraw.el).empty();
-        $(objDraw.el).append(img);
+        $(objDraw.el).removeClass('loading').empty().append(img);
 
         if(objDraw.options.onImgReady) objDraw.options.onImgReady(objDraw);
 
         // fireEvent canvasReady
-        $(objDraw).trigger('canvasReady', [objDraw, true]);
+        $(objDraw).trigger('chartReady', [objDraw, true]);
       }
 
     },
@@ -168,33 +165,34 @@
 
       // browser canvas support ?
       if(this.canvasSupport) {
-
-        // insert canvas response into element
-        $(objDraw.el).find('.'+cssClass).remove();
+        // refresh canvas response into element
         $(objDraw.el).addClass(cssClass);
 
         if(objDraw.options.autoInject) {
-          var canvas = objDraw.fn(data, objDraw.el);
-          $(objDraw.el).empty().append(canvas);
-          $(objDraw).trigger('chartReady', [objDraw.data]);
+          var canvas = objDraw.fn(data, objDraw.el)
+            , exC = $(objDraw.el).find('canvas');
+
+          // append/replace canvas object
+          if(exC.length) exC.replaceWith(canvas)
+          else $(objDraw.el).append(canvas);
         }
 
         // fireEvent canvasReady
-        $(objDraw).trigger('canvasReady', [objDraw.data, false]);
+        $(objDraw).trigger('chartReady', [objDraw.data, false]);
       }
       else {
         // if not canvas supported then make rendering in server side
         this.renderFallback(objDraw);
       }
-
+ 
       // whether to include a download button along with the . If set to true, it injects an element like this before the target element.
       if(objDraw.options.download) {
         var url = objDraw.options.urlBuilder ? objDraw.options.urlBuilder(objDraw.id, objDraw.url, false) : '/draw/' + objDraw.id + '?url=/getData&forceDownload=true'
-          ,  src = this._modUrl(url, objDraw);
+          , src = this._modUrl(url, objDraw);
 
         if(src.search(/forceDownload=/) < 0) src+= '&forceDownload=true';
 
-        objDraw.el.append($('<div class="download"><a title="download \'' + objDraw.id + '\'" href="' + src + '">download</a></div>'));
+        if(!$(objDraw.el).find('div.download').length) objDraw.el.append($('<div class="download"><a title="download \'' + objDraw.id + '\'" href="' + src + '">download</a></div>'));
       }
     }
   }
