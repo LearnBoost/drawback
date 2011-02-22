@@ -15,11 +15,8 @@
       canvas.height = data.dims ? data.dims.height : 200;
 
       // chart x/y scale
-      var scale = {
-        x: 20,
-        y: 2
-      }
-      ,  _data = data.data;
+      var scale = { x: 20, y: 2 }
+        , _data = data.data;
 
       // Draw lineal Chart
       ctx.save();
@@ -43,7 +40,7 @@
 
       // draw lines
       ctx.beginPath();
-      ctx.lineWidth = 1
+      ctx.lineWidth = 1;
       ctx.strokeStyle = '#A26';
       for(var j=0; j < _data.length; j++) {
         if(!j) ctx.moveTo(j*scale.x, _data[j]*scale.y);

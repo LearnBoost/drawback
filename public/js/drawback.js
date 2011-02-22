@@ -39,26 +39,8 @@
       // refresh method
       objDraw.refresh = function (url) {
         if(url) objDraw.url = url;
-
-        if(objDraw.options.forceServer)
-          self.renderFallback(objDraw, true);
-        else
-          self._draw(objDraw);
+        self._draw(objDraw);
       }
-    },
-
-    _draw: function (objDraw) {
-      // forceServer property
-        // if set to true it ignores browser rendering and always does server side rendering.
-        if(objDraw.options.forceServer)
-          this.renderFallback(objDraw);
-        else if(objDraw.url != undefined)
-            this.requestData(objDraw);
-          else {
-            this.process(objDraw);
-          }
-
-        return objDraw;
     },
 
     /**
@@ -102,6 +84,14 @@
 
     },
 
+    _draw: function (objDraw) {
+      // request chart data
+      if(objDraw.url != undefined)
+        this.requestData(objDraw);
+
+      return objDraw;
+    },
+
     /**
      * requestData method
      * retrieve the data throug ajax request
@@ -120,7 +110,13 @@
         },
         success: function(resp) {
           objDraw.data = resp;
-          self.process(objDraw);
+
+          // forceServer property
+          // if set to true it ignores browser rendering and always does server side rendering.
+          if(objDraw.options.forceServer) 
+            self.renderFallback(objDraw);
+          else
+            self.process(objDraw);
         }
       });
     },
@@ -150,13 +146,14 @@
 
         if(objDraw.options.onImgReady) objDraw.options.onImgReady(objDraw);
 
-        // fireEvent canvasReady
-        $(objDraw).trigger('chartReady', [objDraw, true]);
+        // fireEvent chartReady
+        $(objDraw).trigger('chartReady', [objDraw.data, true]);
       }
 
     },
 
     process: function (objDraw) {
+
       // execute function
       var data = {
           dims: objDraw.dims,
@@ -178,7 +175,7 @@
           else $(objDraw.el).append(canvas);
         }
 
-        // fireEvent canvasReady
+        // fireEvent chartReady
         $(objDraw).trigger('chartReady', [objDraw.data, false]);
       }
       else {
