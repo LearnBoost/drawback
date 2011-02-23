@@ -1,7 +1,7 @@
 (function($){
 
   // *** DrawBack ***
-  // v0.0.9
+  // v0.1.1
   DrawBack = {
 
     // all functions registered into the _stack array
@@ -113,10 +113,10 @@
 
           // forceServer property
           // if set to true it ignores browser rendering and always does server side rendering.
-          if(objDraw.options.forceServer) 
-            self.renderFallback(objDraw);
-          else
+          if(!objDraw.options.forceServer) 
             self.process(objDraw);
+          else
+            self.renderFallback(objDraw);
         }
       });
     },
@@ -137,18 +137,19 @@
         , _url = this._modUrl(url, objDraw);
 
       // create obj element image
-      var img = new Image();
+      var img = $('<img>');
 
-      img.src = _url + (refresh ? '&rnd='+(+new Date) : '');
+      $(img).attr('src', _url + (refresh ? '&rnd='+(+new Date) : ''));
 
-      img.onload = function() {
-        $(objDraw.el).removeClass('loading').empty().append(img);
+      $(img).load(function() {
+        $(objDraw.el).find('img').remove();
+        $(objDraw.el).removeClass('loading').append(img);
 
-        if(objDraw.options.onImgReady) objDraw.options.onImgReady(objDraw);
+        if(objDraw.options.onChartReady) objDraw.options.onChartReady(objDraw, true);
 
         // fireEvent chartReady
         $(objDraw).trigger('chartReady', [objDraw.data, true]);
-      }
+      });
 
     },
 
@@ -163,16 +164,14 @@
 
       // browser canvas support ?
       if(this.canvasSupport) {
+        $(objDraw.el).find('canvas').remove();
+
         // refresh canvas response into element
         $(objDraw.el).addClass(cssClass);
 
         if(objDraw.options.autoInject) {
-          var canvas = objDraw.fn(data, objDraw.el)
-            , exC = $(objDraw.el).find('canvas');
-
-          // append/replace canvas object
-          if(exC.length) exC.replaceWith(canvas)
-          else $(objDraw.el).append(canvas);
+          var canvas = objDraw.fn(data, objDraw.el); // sometimes the plugin injects automatically the canvas object
+          if(!$(objDraw.el).find('canvas').length) $(objDraw.el).append(canvas);
         }
 
         // fireEvent chartReady
