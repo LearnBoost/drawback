@@ -167,3 +167,15 @@ jQuery.extend = function() {
 };
 
 $merge = jQuery.extend
+
+var class2type = {};
+// Populate the class2type map
+"Boolean Number String Function Array Date RegExp Object".split(" ").forEach( function(name) {
+ class2type[ "[object " + name + "]" ] = name.toLowerCase();
+});
+
+jQuery.type = function(obj) {
+  return obj == null ?
+     String( obj ) :
+    class2type[ Object.prototype.toString.call(obj) ] || "object";
+}
