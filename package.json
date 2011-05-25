@@ -10,6 +10,10 @@
   "dependencies": {
     "canvas": "0.4.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/LearnBoost/drawback.git"
+  },
   "keywords": [
     "canvas",
     "node-canvas",
