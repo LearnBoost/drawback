@@ -1,7 +1,7 @@
 (function($){
 
   // *** DrawBack ***
-  // v0.1.1
+  // v0.1.4
   DrawBack = {
 
     // all functions registered into the _stack array
