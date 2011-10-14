@@ -1,4 +1,4 @@
-(function($){
+;(function($){
 
   // *** DrawBack ***
   // v0.1.4
@@ -197,4 +197,4 @@
 
   DrawBack.start();
 
-})(jQuery)
+})(jQuery);
