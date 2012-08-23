@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/LearnBoost/drawback.png)](http://travis-ci.org/LearnBoost/drawback)
 Drawback
 ========
 
