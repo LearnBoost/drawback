@@ -8,7 +8,7 @@
     "Nathan Rajlich <nate@learnboost.com>"
   ],
   "dependencies": {
-    "canvas": "0.10.2"
+    "canvas": "1.1.3"
   },
   "repository": {
     "type": "git",
